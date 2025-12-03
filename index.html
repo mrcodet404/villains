@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Announcement Bot - Netflix Style</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .font-bebas { font-family: 'Bebas Neue', sans-serif; }
+        
+        /* Netflix Colors */
+        .netflix-bg { background-color: #141414; }
+        .netflix-card { background-color: #1f1f1f; }
+        .netflix-card-hover { background-color: #2a2a2a; }
+        .netflix-red { background-color: #E50914; }
+        .netflix-red:hover { background-color: #b8070f; }
+        .netflix-red-text { color: #E50914; }
+        .netflix-input { background-color: #333; border-color: #444; }
+        .netflix-input:focus { border-color: #E50914; }
+        
+        /* Netflix Gradient */
+        .netflix-gradient {
+            background: linear-gradient(180deg, rgba(20,20,20,0) 0%, rgba(20,20,20,1) 100%);
+        }
+        
+        /* Card hover effect */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(229, 9, 20, 0.3);
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #141414; }
+        ::-webkit-scrollbar-thumb { background: #E50914; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b8070f; }
+        
+        /* Glow effect */
+        .red-glow { box-shadow: 0 0 30px rgba(229, 9, 20, 0.5); }
+        
+        /* Custom checkbox */
+        input[type="checkbox"] {
+            accent-color: #E50914;
+        }
+        
+        /* Pulse animation */
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(229, 9, 20, 0); }
+        }
+        .pulse-red { animation: pulse-red 2s infinite; }
+        
+        /* Modal backdrop */
+        .modal-backdrop { 
+            background: rgba(0,0,0,0.85); 
+            backdrop-filter: blur(8px); 
+        }
+        
+        /* Hero section */
+        .hero-gradient {
+            background: linear-gradient(90deg, #141414 0%, transparent 50%, #141414 100%),
+                        linear-gradient(180deg, transparent 60%, #141414 100%),
+                        radial-gradient(ellipse at center top, rgba(229, 9, 20, 0.3) 0%, transparent 70%);
+        }
+    </style>
+</head>
+<body class="netflix-bg min-h-screen text-white">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-40 transition-all duration-300" id="mainHeader">
+        <div class="bg-gradient-to-b from-black/80 to-transparent py-4 px-6">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <!-- Netflix-style Logo -->
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 netflix-red rounded-lg flex items-center justify-center red-glow overflow-hidden">
+                            <img id="headerBotAvatar" src="" class="w-full h-full object-cover hidden">
+                            <svg id="headerBotIcon" class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 id="headerBotName" class="text-2xl font-bebas tracking-wider text-white">ANNOUNCEMENT BOT</h1>
+                            <p class="text-gray-400 text-xs uppercase tracking-widest">Dashboard Control</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span id="webhookStatus" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-900/50 text-red-400 text-sm border border-red-800">
+                        <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                        Webhook Belum Diatur
+                    </span>
+                    <button onclick="openSettings()" class="p-3 rounded-full netflix-card hover:bg-[#E50914] transition-all duration-300 group" title="Pengaturan">
+                        <svg class="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-12 hero-gradient">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <div class="text-center mb-8">
+                <h2 class="text-5xl md:text-6xl font-bebas tracking-wider mb-4">
+                    <span class="netflix-red-text">DISCORD</span> ANNOUNCEMENT
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Kirim announcement otomatis ke server Discord kamu. Atur jadwal, custom pesan, dan jangkau semua member dengan @everyone.
+                </p>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div class="netflix-card rounded-xl p-5 text-center card-hover border border-gray-800">
+                    <div id="totalSent" class="text-4xl font-bebas netflix-red-text">0</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-wider">Terkirim</div>
+                </div>
+                <div class="netflix-card rounded-xl p-5 text-center card-hover border border-gray-800">
+                    <div id="totalScheduled" class="text-4xl font-bebas text-yellow-500">0</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-wider">Terjadwal</div>
+                </div>
+                <div class="netflix-card rounded-xl p-5 text-center card-hover border border-gray-800">
+                    <div id="activeSchedules" class="text-4xl font-bebas text-green-500">0</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-wider">Aktif</div>
+                </div>
+                <div class="netflix-card rounded-xl p-5 text-center card-hover border border-gray-800">
+                    <div id="currentTime" class="text-4xl font-bebas text-blue-400">--:--</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-wider">Waktu</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-6 pb-12">
+        <div class="grid lg:grid-cols-3 gap-6">
+            <!-- Form Panel -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Create Announcement -->
+                <div class="netflix-card rounded-2xl p-6 border border-gray-800 card-hover">
+                    <h2 class="text-xl font-bebas tracking-wider mb-6 flex items-center gap-3">
+                        <div class="w-10 h-10 netflix-red rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
+                            </svg>
+                        </div>
+                        BUAT ANNOUNCEMENT BARU
+                    </h2>
+                    
+                    <div class="space-y-5">
+                        <!-- Title -->
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2 uppercase tracking-wider">Judul Announcement</label>
+                            <input type="text" id="announcementTitle" placeholder="📢 Pengumuman Penting!" 
+                                class="w-full netflix-input border-2 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none transition">
+                        </div>
+
+                        <!-- Message -->
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2 uppercase tracking-wider">Isi Pesan</label>
+                            <textarea id="announcementMessage" rows="5" placeholder="Tulis pesan announcement kamu di sini...&#10;&#10;Gunakan **bold** dan *italic* untuk formatting!"
+                                class="w-full netflix-input border-2 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none transition resize-none"></textarea>
+                        </div>
+
+                        <!-- Schedule -->
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2 uppercase tracking-wider">Pilih Hari</label>
+                                <select id="daySelect" class="w-full netflix-input border-2 rounded-lg px-4 py-3 text-white focus:outline-none transition cursor-pointer">
+                                    <option value="everyday">Setiap Hari</option>
+                                    <option value="monday">Senin</option>
+                                    <option value="tuesday">Selasa</option>
+                                    <option value="wednesday">Rabu</option>
+                                    <option value="thursday">Kamis</option>
+                                    <option value="friday">Jumat</option>
+                                    <option value="saturday">Sabtu</option>
+                                    <option value="sunday">Minggu</option>
+                                    <option value="weekdays">Hari Kerja (Sen-Jum)</option>
+                                    <option value="weekends">Akhir Pekan (Sab-Min)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-400 mb-2 uppercase tracking-wider">Pilih Jam</label>
+                                <input type="time" id="timeSelect" value="09:00"
+                                    class="w-full netflix-input border-2 rounded-lg px-4 py-3 text-white focus:outline-none transition cursor-pointer">
+                            </div>
+                        </div>
+
+                        <!-- Options -->
+                        <div class="flex flex-wrap gap-6">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" id="mentionEveryone" checked class="w-5 h-5 rounded bg-gray-700 border-gray-600 cursor-pointer">
+                                <span class="text-sm group-hover:text-[#E50914] transition">Mention @everyone</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" id="embedMessage" checked class="w-5 h-5 rounded bg-gray-700 border-gray-600 cursor-pointer">
+                                <span class="text-sm group-hover:text-[#E50914] transition">Gunakan Embed</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" id="repeatSchedule" class="w-5 h-5 rounded bg-gray-700 border-gray-600 cursor-pointer">
+                                <span class="text-sm group-hover:text-[#E50914] transition">Ulangi Setiap Minggu</span>
+                            </label>
+                        </div>
+
+                        <!-- Embed Color -->
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-3 uppercase tracking-wider">Warna Embed</label>
+                            <div class="flex gap-3">
+                                <button onclick="setEmbedColor('#E50914')" class="w-10 h-10 rounded-full bg-[#E50914] border-4 border-transparent hover:border-white transition color-btn transform hover:scale-110" data-color="#E50914"></button>
+                                <button onclick="setEmbedColor('#3ba55c')" class="w-10 h-10 rounded-full bg-[#3ba55c] border-4 border-transparent hover:border-white transition color-btn transform hover:scale-110" data-color="#3ba55c"></button>
+                                <button onclick="setEmbedColor('#faa61a')" class="w-10 h-10 rounded-full bg-[#faa61a] border-4 border-transparent hover:border-white transition color-btn transform hover:scale-110" data-color="#faa61a"></button>
+                                <button onclick="setEmbedColor('#5865F2')" class="w-10 h-10 rounded-full bg-[#5865F2] border-4 border-transparent hover:border-white transition color-btn transform hover:scale-110" data-color="#5865F2"></button>
+                                <button onclick="setEmbedColor('#eb459e')" class="w-10 h-10 rounded-full bg-[#eb459e] border-4 border-transparent hover:border-white transition color-btn transform hover:scale-110" data-color="#eb459e"></button>
+                                <button onclick="setEmbedColor('#9b59b6')" class="w-10 h-10 rounded-full bg-[#9b59b6] border-4 border-transparent hover:border-white transition color-btn transform hover:scale-110" data-color="#9b59b6"></button>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="flex gap-4 pt-4">
+                            <button onclick="scheduleAnnouncement()" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 uppercase tracking-wider text-sm">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Jadwalkan
+                            </button>
+                            <button onclick="sendNow()" class="flex-1 netflix-red text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 uppercase tracking-wider text-sm red-glow">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                                </svg>
+                                Kirim Sekarang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scheduled Announcements -->
+                <div class="netflix-card rounded-2xl p-6 border border-gray-800">
+                    <h2 class="text-xl font-bebas tracking-wider mb-6 flex items-center gap-3">
+                        <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        JADWAL ANNOUNCEMENT
+                        <span id="scheduleCount" class="ml-auto text-sm font-normal text-gray-400 font-sans">0 terjadwal</span>
+                    </h2>
+                    
+                    <div id="scheduleList" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                        <div class="text-center py-12 text-gray-500">
+                            <svg class="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                            </svg>
+                            <p class="text-lg">Belum ada jadwal announcement</p>
+                            <p class="text-sm text-gray-600 mt-2">Buat announcement pertamamu!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="space-y-6">
+                <!-- Live Preview -->
+                <div class="netflix-card rounded-2xl p-6 border border-gray-800 sticky top-28">
+                    <h2 class="text-xl font-bebas tracking-wider mb-6 flex items-center gap-3">
+                        <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                        </div>
+                        PREVIEW
+                    </h2>
+                    
+                    <div class="bg-[#36393f] rounded-lg p-4">
+                        <!-- Bot Message -->
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 netflix-red rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+                                <img id="previewBotAvatar" src="" class="w-full h-full object-cover hidden">
+                                <svg id="previewBotIcon" class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2">
+                                    <span id="previewBotName" class="font-medium text-[#E50914]">Announcement Bot</span>
+                                    <span class="text-xs bg-[#5865F2] text-white px-1.5 py-0.5 rounded">BOT</span>
+                                    <span class="text-xs text-gray-500">Hari ini jam <span id="previewTime">09:00</span></span>
+                                </div>
+                                <div id="previewMention" class="text-blue-400 text-sm mt-1">@everyone</div>
+                                
+                                <!-- Embed Preview -->
+                                <div id="embedPreview" class="mt-2 rounded overflow-hidden" style="border-left: 4px solid #E50914;">
+                                    <div class="bg-[#2f3136] p-3">
+                                        <div id="previewTitle" class="font-semibold text-white mb-2">📢 Pengumuman Penting!</div>
+                                        <div id="previewMessage" class="text-sm text-gray-300">Tulis pesan announcement kamu di sini...</div>
+                                        <div class="mt-3 pt-2 border-t border-gray-600 flex items-center gap-2 text-xs text-gray-400">
+                                            <span id="previewSchedule">📅 Setiap Hari</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Setup -->
+                <div class="netflix-card rounded-2xl p-6 border border-gray-800 card-hover">
+                    <h2 class="text-xl font-bebas tracking-wider mb-4 flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        QUICK SETUP
+                    </h2>
+                    <p class="text-sm text-gray-400 mb-5">Untuk mulai menggunakan bot, atur Webhook Discord terlebih dahulu.</p>
+                    <button onclick="openSettings()" class="w-full netflix-red text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 uppercase tracking-wider text-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Buka Pengaturan Bot
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-6 text-center text-gray-500 text-sm">
+            <p>Discord Announcement Bot Dashboard • Netflix Style</p>
+        </div>
+    </footer>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop absolute inset-0" onclick="closeSettings()"></div>
+        <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+            <div class="netflix-card rounded-2xl border border-gray-700 w-full max-w-2xl max-h-[90vh] overflow-hidden shadow-2xl">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between p-6 border-b border-gray-700 bg-gradient-to-r from-[#E50914]/20 to-transparent">
+                    <h2 class="text-2xl font-bebas tracking-wider flex items-center gap-3">
+                        <div class="w-10 h-10 netflix-red rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        PENGATURAN BOT
+                    </h2>
+                    <button onclick="closeSettings()" class="p-2 rounded-full hover:bg-gray-700 transition group">
+                        <svg class="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="p-6 space-y-6 overflow-y-auto max-h-[60vh]">
+                    <!-- Webhook URL -->
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2 uppercase tracking-wider">
+                            Discord Webhook URL <span class="netflix-red-text">*</span>
+                        </label>
+                        <input type="text" id="webhookUrl" placeholder="https://discord.com/api/webhooks/..." 
+                            class="w-full netflix-input border-2 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none transition">
+                        <p class="text-xs text-gray-500 mt-2 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Server Settings → Integrations → Webhooks → New Webhook
+                        </p>
+                    </div>
+
+                    <!-- Bot Name -->
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2 uppercase tracking-wider">Nama Bot</label>
+                        <input type="text" id="botName" placeholder="Announcement Bot" 
+                            class="w-full netflix-input border-2 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none transition">
+                    </div>
+
+                    <!-- Bot Avatar -->
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2 uppercase tracking-wider">URL Avatar Bot</label>
+                        <input type="text" id="botAvatar" placeholder="https://example.com/avatar.png" 
+                            class="w-full netflix-input border-2 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none transition">
+                    </div>
+
+                    <!-- Avatar Preview -->
+                    <div class="flex items-center gap-4 p-4 bg-[#0a0a0a] rounded-xl border border-gray-800">
+                        <div class="w-16 h-16 netflix-red rounded-full flex items-center justify-center overflow-hidden red-glow">
+                            <img id="avatarPreview" src="" class="w-full h-full object-cover hidden">
+                            <svg id="avatarPreviewIcon" class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p id="previewName" class="font-bebas text-xl tracking-wider">ANNOUNCEMENT BOT</p>
+                            <p class="text-sm text-gray-400">Preview tampilan bot</p>
+                        </div>
+                    </div>
+
+                    <!-- Test Webhook -->
+                    <div class="border-2 border-dashed border-gray-700 rounded-xl p-5">
+                        <h3 class="font-bebas text-lg tracking-wider mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                            TEST WEBHOOK
+                        </h3>
+                        <p class="text-sm text-gray-400 mb-4">Kirim pesan test untuk memastikan webhook berfungsi dengan benar.</p>
+                        <button onclick="testWebhook()" id="testWebhookBtn" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2 uppercase tracking-wider text-sm">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                            </svg>
+                            Kirim Pesan Test
+                        </button>
+                    </div>
+
+                    <!-- How to get Webhook -->
+                    <div class="bg-[#0a0a0a] rounded-xl p-5 border border-gray-800">
+                        <h3 class="font-bebas text-lg tracking-wider mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            CARA MENDAPATKAN WEBHOOK URL
+                        </h3>
+                        <ol class="text-sm text-gray-400 space-y-2 list-decimal list-inside">
+                            <li>Buka Discord dan pergi ke server kamu</li>
+                            <li>Klik kanan pada channel tujuan → <span class="text-white">Edit Channel</span></li>
+                            <li>Pilih tab <span class="text-white">Integrations</span></li>
+                            <li>Klik <span class="text-white">Webhooks</span> → <span class="text-white">New Webhook</span></li>
+                            <li>Klik <span class="text-white">Copy Webhook URL</span></li>
+                            <li>Paste URL di kolom Webhook URL di atas</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="flex gap-4 p-6 border-t border-gray-700 bg-gradient-to-r from-transparent to-[#E50914]/10">
+                    <button onclick="closeSettings()" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-4 px-6 rounded-lg transition uppercase tracking-wider text-sm">
+                        Batal
+                    </button>
+                    <button onclick="saveSettings()" class="flex-1 netflix-red text-white font-semibold py-4 px-6 rounded-lg transition flex items-center justify-center gap-2 uppercase tracking-wider text-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Simpan Pengaturan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-500 z-50">
+        <div class="netflix-red text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 red-glow">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            <span id="toastMessage" class="font-medium">Berhasil!</span>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center">
+        <div class="netflix-card rounded-2xl p-8 flex flex-col items-center gap-4 border border-gray-700">
+            <div class="w-16 h-16 border-4 border-[#E50914] border-t-transparent rounded-full animate-spin"></div>
+            <span id="loadingText" class="font-bebas text-xl tracking-wider">MENGIRIM PESAN...</span>
+        </div>
+    </div>
+
+    <script>
+        let schedules = JSON.parse(localStorage.getItem('discordSchedules')) || [];
+        let totalSent = parseInt(localStorage.getItem('totalSent')) || 0;
+        let currentEmbedColor = '#E50914';
+        let botSettings = JSON.parse(localStorage.getItem('botSettings')) || {
+            webhookUrl: '',
+            botName: 'Announcement Bot',
+            botAvatar: ''
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updatePreview();
+            renderSchedules();
+            updateStats();
+            setEmbedColor('#E50914');
+            loadSettings();
+            updateWebhookStatus();
+            startScheduleChecker();
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 1000);
+            
+            // Header scroll effect
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('mainHeader');
+                if (window.scrollY > 50) {
+                    header.classList.add('bg-black/90');
+                } else {
+                    header.classList.remove('bg-black/90');
+                }
+            });
+        });
+
+        function updateCurrentTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toTimeString().slice(0, 5);
+        }
+
+        // Live Preview Updates
+        document.getElementById('announcementTitle').addEventListener('input', updatePreview);
+        document.getElementById('announcementMessage').addEventListener('input', updatePreview);
+        document.getElementById('daySelect').addEventListener('change', updatePreview);
+        document.getElementById('timeSelect').addEventListener('change', updatePreview);
+        document.getElementById('mentionEveryone').addEventListener('change', updatePreview);
+        document.getElementById('embedMessage').addEventListener('change', updatePreview);
+
+        // Settings live preview
+        document.getElementById('botName').addEventListener('input', updateSettingsPreview);
+        document.getElementById('botAvatar').addEventListener('input', updateSettingsPreview);
+
+        function updatePreview() {
+            const title = document.getElementById('announcementTitle').value || '📢 Pengumuman Penting!';
+            const message = document.getElementById('announcementMessage').value || 'Tulis pesan announcement kamu di sini...';
+            const day = document.getElementById('daySelect').options[document.getElementById('daySelect').selectedIndex].text;
+            const time = document.getElementById('timeSelect').value;
+            const mentionEveryone = document.getElementById('mentionEveryone').checked;
+            const useEmbed = document.getElementById('embedMessage').checked;
+
+            document.getElementById('previewTitle').textContent = title;
+            document.getElementById('previewMessage').textContent = message;
+            document.getElementById('previewTime').textContent = time;
+            document.getElementById('previewMention').style.display = mentionEveryone ? 'block' : 'none';
+            document.getElementById('embedPreview').style.display = useEmbed ? 'block' : 'none';
+            document.getElementById('previewSchedule').textContent = `📅 ${day}`;
+            document.getElementById('previewBotName').textContent = botSettings.botName || 'Announcement Bot';
+            
+            if (botSettings.botAvatar) {
+                document.getElementById('previewBotAvatar').src = botSettings.botAvatar;
+                document.getElementById('previewBotAvatar').classList.remove('hidden');
+                document.getElementById('previewBotIcon').classList.add('hidden');
+            } else {
+                document.getElementById('previewBotAvatar').classList.add('hidden');
+                document.getElementById('previewBotIcon').classList.remove('hidden');
+            }
+        }
+
+        function updateSettingsPreview() {
+            const name = document.getElementById('botName').value || 'Announcement Bot';
+            const avatar = document.getElementById('botAvatar').value;
+            
+            document.getElementById('previewName').textContent = name.toUpperCase();
+            
+            if (avatar) {
+                document.getElementById('avatarPreview').src = avatar;
+                document.getElementById('avatarPreview').classList.remove('hidden');
+                document.getElementById('avatarPreviewIcon').classList.add('hidden');
+                
+                document.getElementById('avatarPreview').onerror = function() {
+                    this.classList.add('hidden');
+                    document.getElementById('avatarPreviewIcon').classList.remove('hidden');
+                };
+            } else {
+                document.getElementById('avatarPreview').classList.add('hidden');
+                document.getElementById('avatarPreviewIcon').classList.remove('hidden');
+            }
+        }
+
+        function setEmbedColor(color) {
+            currentEmbedColor = color;
+            document.getElementById('embedPreview').style.borderLeftColor = color;
+            
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                btn.classList.remove('border-white');
+                btn.classList.add('border-transparent');
+            });
+            document.querySelector(`[data-color="${color}"]`)?.classList.remove('border-transparent');
+            document.querySelector(`[data-color="${color}"]`)?.classList.add('border-white');
+        }
+
+        function openSettings() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+            document.getElementById('webhookUrl').value = botSettings.webhookUrl || '';
+            document.getElementById('botName').value = botSettings.botName || 'Announcement Bot';
+            document.getElementById('botAvatar').value = botSettings.botAvatar || '';
+            updateSettingsPreview();
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
+
+        function saveSettings() {
+            const webhookUrl = document.getElementById('webhookUrl').value.trim();
+            const botName = document.getElementById('botName').value.trim() || 'Announcement Bot';
+            const botAvatar = document.getElementById('botAvatar').value.trim();
+
+            if (webhookUrl && !webhookUrl.startsWith('https://discord.com/api/webhooks/')) {
+                showToast('URL Webhook tidak valid!', 'error');
+                return;
+            }
+
+            botSettings = {
+                webhookUrl: webhookUrl,
+                botName: botName,
+                botAvatar: botAvatar
+            };
+
+            localStorage.setItem('botSettings', JSON.stringify(botSettings));
+            updateWebhookStatus();
+            updateHeaderBot();
+            updatePreview();
+            closeSettings();
+            showToast('Pengaturan berhasil disimpan! ✅');
+        }
+
+        function loadSettings() {
+            document.getElementById('webhookUrl').value = botSettings.webhookUrl || '';
+            document.getElementById('botName').value = botSettings.botName || 'Announcement Bot';
+            document.getElementById('botAvatar').value = botSettings.botAvatar || '';
+            updateHeaderBot();
+        }
+
+        function updateHeaderBot() {
+            document.getElementById('headerBotName').textContent = (botSettings.botName || 'Announcement Bot').toUpperCase();
+            
+            if (botSettings.botAvatar) {
+                document.getElementById('headerBotAvatar').src = botSettings.botAvatar;
+                document.getElementById('headerBotAvatar').classList.remove('hidden');
+                document.getElementById('headerBotIcon').classList.add('hidden');
+            } else {
+                document.getElementById('headerBotAvatar').classList.add('hidden');
+                document.getElementById('headerBotIcon').classList.remove('hidden');
+            }
+        }
+
+        function updateWebhookStatus() {
+            const status = document.getElementById('webhookStatus');
+            if (botSettings.webhookUrl) {
+                status.className = 'inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-900/50 text-green-400 text-sm border border-green-800';
+                status.innerHTML = '<span class="w-2 h-2 bg-green-400 rounded-full pulse-red"></span> Webhook Terhubung';
+            } else {
+                status.className = 'inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-900/50 text-red-400 text-sm border border-red-800';
+                status.innerHTML = '<span class="w-2 h-2 bg-red-500 rounded-full"></span> Webhook Belum Diatur';
+            }
+        }
+
+        async function testWebhook() {
+            const webhookUrl = document.getElementById('webhookUrl').value.trim();
+            
+            if (!webhookUrl) {
+                showToast('Masukkan Webhook URL terlebih dahulu!', 'error');
+                return;
+            }
+
+            if (!webhookUrl.startsWith('https://discord.com/api/webhooks/')) {
+                showToast('URL Webhook tidak valid!', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('testWebhookBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> Mengirim...';
+
+            try {
+                const botName = document.getElementById('botName').value.trim() || 'Announcement Bot';
+                const botAvatar = document.getElementById('botAvatar').value.trim();
+
+                const payload = {
+                    username: botName,
+                    content: '✅ **Test Berhasil!**\n\nWebhook sudah terhubung dengan benar. Bot siap mengirim announcement!',
+                };
+
+                if (botAvatar) {
+                    payload.avatar_url = botAvatar;
+                }
+
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok || response.status === 204) {
+                    showToast('Pesan test berhasil dikirim! Cek Discord kamu 🎉');
+                } else {
+                    const error = await response.json();
+                    showToast(`Gagal: ${error.message || 'Unknown error'}`, 'error');
+                }
+            } catch (error) {
+                showToast(`Error: ${error.message}`, 'error');
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Kirim Pesan Test';
+        }
+
+        async function sendWebhookMessage(title, message, mentionEveryone, useEmbed, color) {
+            if (!botSettings.webhookUrl) {
+                showToast('Webhook belum diatur! Buka pengaturan terlebih dahulu.', 'error');
+                return false;
+            }
+
+            try {
+                let payload = {
+                    username: botSettings.botName || 'Announcement Bot',
+                };
+
+                if (botSettings.botAvatar) {
+                    payload.avatar_url = botSettings.botAvatar;
+                }
+
+                if (useEmbed) {
+                    payload.content = mentionEveryone ? '@everyone' : '';
+                    payload.embeds = [{
+                        title: title,
+                        description: message,
+                        color: parseInt(color.replace('#', ''), 16),
+                        timestamp: new Date().toISOString(),
+                        footer: { text: '🎬 Announcement Bot' }
+                    }];
+                } else {
+                    let content = '';
+                    if (mentionEveryone) content += '@everyone\n\n';
+                    content += `**${title}**\n\n${message}`;
+                    payload.content = content;
+                }
+
+                const response = await fetch(botSettings.webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok || response.status === 204) {
+                    return true;
+                } else {
+                    const error = await response.json();
+                    showToast(`Gagal mengirim: ${error.message || 'Unknown error'}`, 'error');
+                    return false;
+                }
+            } catch (error) {
+                showToast(`Error: ${error.message}`, 'error');
+                return false;
+            }
+        }
+
+        function scheduleAnnouncement() {
+            const title = document.getElementById('announcementTitle').value;
+            const message = document.getElementById('announcementMessage').value;
+            
+            if (!title || !message) {
+                showToast('Judul dan pesan harus diisi!', 'error');
+                return;
+            }
+
+            if (!botSettings.webhookUrl) {
+                showToast('Webhook belum diatur! Buka pengaturan terlebih dahulu.', 'error');
+                openSettings();
+                return;
+            }
+
+            const schedule = {
+                id: Date.now(),
+                title: title,
+                message: message,
+                day: document.getElementById('daySelect').value,
+                dayName: document.getElementById('daySelect').options[document.getElementById('daySelect').selectedIndex].text,
+                time: document.getElementById('timeSelect').value,
+                mentionEveryone: document.getElementById('mentionEveryone').checked,
+                useEmbed: document.getElementById('embedMessage').checked,
+                repeat: document.getElementById('repeatSchedule').checked,
+                color: currentEmbedColor,
+                active: true,
+                lastSent: null
+            };
+
+            schedules.push(schedule);
+            saveSchedules();
+            renderSchedules();
+            updateStats();
+            clearForm();
+            showToast('Announcement berhasil dijadwalkan! ⏰');
+        }
+
+        async function sendNow() {
+            const title = document.getElementById('announcementTitle').value;
+            const message = document.getElementById('announcementMessage').value;
+            
+            if (!title || !message) {
+                showToast('Judul dan pesan harus diisi!', 'error');
+                return;
+            }
+
+            if (!botSettings.webhookUrl) {
+                showToast('Webhook belum diatur! Buka pengaturan terlebih dahulu.', 'error');
+                openSettings();
+                return;
+            }
+
+            showLoading('MENGIRIM ANNOUNCEMENT...');
+
+            const mentionEveryone = document.getElementById('mentionEveryone').checked;
+            const useEmbed = document.getElementById('embedMessage').checked;
+
+            const success = await sendWebhookMessage(title, message, mentionEveryone, useEmbed, currentEmbedColor);
+
+            hideLoading();
+
+            if (success) {
+                totalSent++;
+                localStorage.setItem('totalSent', totalSent);
+                updateStats();
+                clearForm();
+                showToast('Announcement berhasil dikirim! 🚀');
+            }
+        }
+
+        function renderSchedules() {
+            const container = document.getElementById('scheduleList');
+            
+            if (schedules.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500">
+                        <svg class="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                        </svg>
+                        <p class="text-lg">Belum ada jadwal announcement</p>
+                        <p class="text-sm text-gray-600 mt-2">Buat announcement pertamamu!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = schedules.map(schedule => `
+                <div class="bg-[#0a0a0a] rounded-xl p-5 border-l-4 hover:bg-[#1a1a1a] transition-all duration-300" style="border-left-color: ${schedule.color}">
+                    <div class="flex items-start justify-between gap-4">
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-semibold text-white truncate text-lg">${schedule.title}</h3>
+                            <p class="text-sm text-gray-400 mt-1 line-clamp-2">${schedule.message}</p>
+                            <div class="flex flex-wrap gap-2 mt-3">
+                                <span class="bg-yellow-500/20 text-yellow-300 px-3 py-1 rounded-full text-xs font-medium">${schedule.dayName} - ${schedule.time}</span>
+                                ${schedule.mentionEveryone ? '<span class="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-xs font-medium">@everyone</span>' : ''}
+                                ${schedule.repeat ? '<span class="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-xs font-medium">🔄 Berulang</span>' : ''}
+                                ${schedule.active ? '<span class="bg-[#E50914]/20 text-[#E50914] px-3 py-1 rounded-full text-xs font-medium">● Aktif</span>' : '<span class="bg-gray-700 text-gray-400 px-3 py-1 rounded-full text-xs font-medium">○ Nonaktif</span>'}
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="sendScheduleNow(${schedule.id})" class="p-3 rounded-lg bg-[#E50914]/20 text-[#E50914] hover:bg-[#E50914] hover:text-white transition" title="Kirim Sekarang">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                                </svg>
+                            </button>
+                            <button onclick="toggleSchedule(${schedule.id})" class="p-3 rounded-lg ${schedule.active ? 'bg-green-500/20 text-green-400 hover:bg-green-500 hover:text-white' : 'bg-gray-700 text-gray-400 hover:bg-gray-600'} transition" title="${schedule.active ? 'Nonaktifkan' : 'Aktifkan'}">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    ${schedule.active ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>' : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"/>'}
+                                </svg>
+                            </button>
+                            <button onclick="deleteSchedule(${schedule.id})" class="p-3 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition" title="Hapus">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function sendScheduleNow(id) {
+            const schedule = schedules.find(s => s.id === id);
+            if (!schedule) return;
+
+            showLoading('MENGIRIM ANNOUNCEMENT...');
+
+            const success = await sendWebhookMessage(
+                schedule.title, 
+                schedule.message, 
+                schedule.mentionEveryone, 
+                schedule.useEmbed, 
+                schedule.color
+            );
+
+            hideLoading();
+
+            if (success) {
+                totalSent++;
+                localStorage.setItem('totalSent', totalSent);
+                updateStats();
+                showToast(`"${schedule.title}" berhasil dikirim! 🚀`);
+            }
+        }
+
+        function toggleSchedule(id) {
+            const schedule = schedules.find(s => s.id === id);
+            if (schedule) {
+                schedule.active = !schedule.active;
+                saveSchedules();
+                renderSchedules();
+                updateStats();
+                showToast(schedule.active ? 'Jadwal diaktifkan ✅' : 'Jadwal dinonaktifkan ⏸️');
+            }
+        }
+
+        function deleteSchedule(id) {
+            if (confirm('Yakin ingin menghapus jadwal ini?')) {
+                schedules = schedules.filter(s => s.id !== id);
+                saveSchedules();
+                renderSchedules();
+                updateStats();
+                showToast('Jadwal dihapus 🗑️');
+            }
+        }
+
+        function saveSchedules() {
+            localStorage.setItem('discordSchedules', JSON.stringify(schedules));
+        }
+
+        function updateStats() {
+            const activeCount = schedules.filter(s => s.active).length;
+            document.getElementById('totalSent').textContent = totalSent;
+            document.getElementById('totalScheduled').textContent = schedules.length;
+            document.getElementById('activeSchedules').textContent = activeCount;
+            document.getElementById('scheduleCount').textContent = `${schedules.length} terjadwal`;
+        }
+
+        function clearForm() {
+            document.getElementById('announcementTitle').value = '';
+            document.getElementById('announcementMessage').value = '';
+            updatePreview();
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.querySelector('div').className = `${type === 'error' ? 'bg-gray-800 border border-red-500' : 'netflix-red'} text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 ${type === 'error' ? '' : 'red-glow'}`;
+            toastMessage.textContent = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        function showLoading(text) {
+            document.getElementById('loadingText').textContent = text;
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        // Schedule checker
+        function startScheduleChecker() {
+            setInterval(async () => {
+                const now = new Date();
+                const currentTime = now.toTimeString().slice(0, 5);
+                const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+                const currentDay = days[now.getDay()];
+                const todayDate = now.toDateString();
+
+                for (const schedule of schedules) {
+                    if (!schedule.active) continue;
+                    
+                    let shouldSend = false;
+                    
+                    if (schedule.time === currentTime) {
+                        if (schedule.day === 'everyday') shouldSend = true;
+                        else if (schedule.day === currentDay) shouldSend = true;
+                        else if (schedule.day === 'weekdays' && now.getDay() >= 1 && now.getDay() <= 5) shouldSend = true;
+                        else if (schedule.day === 'weekends' && (now.getDay() === 0 || now.getDay() === 6)) shouldSend = true;
+                    }
+                    
+                    if (shouldSend && schedule.lastSent !== todayDate) {
+                        schedule.lastSent = todayDate;
+                        
+                        const success = await sendWebhookMessage(
+                            schedule.title,
+                            schedule.message,
+                            schedule.mentionEveryone,
+                            schedule.useEmbed,
+                            schedule.color
+                        );
+                        
+                        if (success) {
+                            totalSent++;
+                            localStorage.setItem('totalSent', totalSent);
+                            updateStats();
+                            
+                            if (!schedule.repeat) {
+                                schedules = schedules.filter(s => s.id !== schedule.id);
+                            }
+                            
+                            saveSchedules();
+                            renderSchedules();
+                            showToast(`"${schedule.title}" terkirim otomatis! 📢`);
+                        }
+                    }
+                }
+            }, 60000);
+        }
+    </script>
+</body>
+</html>
