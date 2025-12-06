@@ -1,0 +1,2457 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villains UI Library - Roblox</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dc2626;
+            border-radius: 3px;
+        }
+        
+        /* Fire Animation */
+        .fire-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .fire {
+            position: absolute;
+            bottom: -20px;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .fire-particle {
+            position: absolute;
+            bottom: 0;
+            border-radius: 50%;
+            animation: rise 2s ease-in infinite;
+            opacity: 0;
+        }
+        
+        @keyframes rise {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) scale(0.3);
+            }
+        }
+        
+        .glow-red {
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.3), 0 0 40px rgba(220, 38, 38, 0.1);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+        }
+        
+        .ui-window {
+            background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+        
+        .tab-active {
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.2) 0%, transparent 100%);
+            border-left: 3px solid #dc2626;
+        }
+        
+        .section-header {
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.1) 0%, transparent 100%);
+        }
+        
+        .btn-villains {
+            background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-villains:hover {
+            background: linear-gradient(145deg, #dc2626 0%, #991b1b 100%);
+            border-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(220, 38, 38, 0.4);
+        }
+        
+        .toggle-track {
+            background: #2a2a2a;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-track.active {
+            background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+        }
+        
+        .toggle-thumb {
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .slider-track {
+            background: #2a2a2a;
+        }
+        
+        .slider-fill {
+            background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+        }
+        
+        .slider-thumb {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.5);
+            transition: transform 0.2s ease;
+        }
+        
+        .slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        
+        .dropdown-menu {
+            background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+        
+        .dropdown-item:hover {
+            background: rgba(220, 38, 38, 0.2);
+        }
+        
+        .notification {
+            background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            animation: slideIn 0.5s ease, fadeOut 0.5s ease 2.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeOut {
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        .minimized-logo {
+            background: linear-gradient(145deg, #dc2626 0%, #991b1b 100%);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(220, 38, 38, 0.8);
+            }
+        }
+        
+        .code-block {
+            background: #0d0d0d;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+        
+        .key-input {
+            background: #0d0d0d;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .key-input:focus {
+            border-color: #dc2626;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+            outline: none;
+        }
+        
+        .villain-skull {
+            filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.5));
+        }
+        
+        .copy-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #dc2626;
+        }
+        
+        .nav-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            color: #dc2626;
+            border-color: #dc2626;
+        }
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen overflow-x-hidden">
+    <!-- Background Pattern -->
+    <div class="fixed inset-0 opacity-5" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22><path fill=%22%23dc2626%22 d=%22M0 0h40v40H0zM40 40h40v40H40z%22/></svg>'); background-size: 80px 80px;"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-lg border-b border-red-900/30">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center villain-skull">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <span class="text-xl font-bold glow-text">Villains UI</span>
+                <span class="text-xs bg-red-600/20 text-red-400 px-2 py-1 rounded-full">v2.0</span>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="showSection('demo')" class="nav-btn active px-4 py-2 rounded-lg border border-transparent text-sm font-medium" id="nav-demo">Demo</button>
+                <button onclick="showSection('code')" class="nav-btn px-4 py-2 rounded-lg border border-transparent text-sm font-medium" id="nav-code">Lua Code</button>
+                <button onclick="showSection('docs')" class="nav-btn px-4 py-2 rounded-lg border border-transparent text-sm font-medium" id="nav-docs">Dokumentasi</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notification Container -->
+    <div id="notification-container" class="fixed top-20 right-4 z-[100] flex flex-col gap-2"></div>
+
+    <!-- Demo Section -->
+    <section id="section-demo" class="pt-24 px-4 pb-10 min-h-screen">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    <span class="text-red-500 glow-text">Villains</span> UI Library
+                </h1>
+                <p class="text-gray-400 text-lg">Modern • Minimalist • Aesthetic • Roblox UI Library</p>
+            </div>
+
+            <!-- Key System Demo -->
+            <div id="key-system" class="max-w-md mx-auto mb-10">
+                <div class="ui-window rounded-2xl p-6 glow-red">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center mb-4 villain-skull">
+                            <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Key System Demo</h3>
+                        <p class="text-gray-400 text-sm">Contoh tampilan key system (opsional)</p>
+                    </div>
+                    
+                    <div class="flex gap-2 mb-4">
+                        <button onclick="openKeyLink('platoboost')" class="flex-1 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-purple-800 text-sm font-medium hover:opacity-80 transition">Platoboost</button>
+                        <button onclick="openKeyLink('workink')" class="flex-1 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-800 text-sm font-medium hover:opacity-80 transition">Work.ink</button>
+                        <button onclick="openKeyLink('linkvertise')" class="flex-1 py-2 rounded-lg bg-gradient-to-r from-green-600 to-green-800 text-sm font-medium hover:opacity-80 transition">Linkvertise</button>
+                    </div>
+                    
+                    <input type="text" id="key-input" placeholder="Masukkan Key..." class="key-input w-full px-4 py-3 rounded-xl text-white mb-4">
+                    
+                    <div class="flex gap-2">
+                        <button onclick="validateKey()" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-700 font-semibold hover:from-red-500 hover:to-red-600 transition transform hover:scale-[1.02]">
+                            Verify Key
+                        </button>
+                        <button onclick="skipKeySystem()" class="px-6 py-3 rounded-xl bg-gray-800 border border-gray-700 font-semibold hover:bg-gray-700 transition transform hover:scale-[1.02]">
+                            Skip Demo →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main UI Demo -->
+            <div id="main-ui" class="">
+                <!-- Minimized Logo -->
+                <div id="minimized-logo" class="hidden fixed bottom-6 right-6 w-14 h-14 rounded-full minimized-logo cursor-pointer z-50 flex items-center justify-center" onclick="toggleMinimize()">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+
+                <!-- UI Window -->
+                <div id="ui-window" class="ui-window rounded-2xl glow-red max-w-4xl mx-auto overflow-hidden relative">
+                    <!-- Fire Background -->
+                    <div class="fire-container" id="fire-bg">
+                        <div class="fire" id="fire-particles"></div>
+                    </div>
+
+                    <!-- Title Bar -->
+                    <div id="title-bar" class="bg-gradient-to-r from-red-900/30 to-transparent px-4 py-3 flex items-center justify-between cursor-move relative z-10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </div>
+                            <span class="font-bold">Villains Hub</span>
+                            <span class="text-xs text-gray-400">by VillainsTeam</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="toggleMinimize()" class="w-8 h-8 rounded-lg bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/40 transition flex items-center justify-center">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                                </svg>
+                            </button>
+                            <button onclick="closeUI()" class="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/40 transition flex items-center justify-center">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex relative z-10" style="min-height: 450px;">
+                        <!-- Sidebar Tabs -->
+                        <div class="w-48 border-r border-red-900/20 bg-black/30">
+                            <div class="p-2 space-y-1">
+                                <button onclick="switchTab('main')" id="tab-main" class="tab-active w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition hover:bg-red-900/10">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                    </svg>
+                                    <span class="text-sm font-medium">Main</span>
+                                </button>
+                                <button onclick="switchTab('combat')" id="tab-combat" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition hover:bg-red-900/10">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-400">Combat</span>
+                                </button>
+                                <button onclick="switchTab('player')" id="tab-player" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition hover:bg-red-900/10">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-400">Player</span>
+                                </button>
+                                <button onclick="switchTab('misc')" id="tab-misc" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition hover:bg-red-900/10">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-400">Misc</span>
+                                </button>
+                                <button onclick="switchTab('settings')" id="tab-settings" class="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition hover:bg-red-900/10">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                                    </svg>
+                                    <span class="text-sm font-medium text-gray-400">Settings</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content -->
+                        <div class="flex-1 p-4 overflow-y-auto" style="max-height: 400px;">
+                            <!-- Main Tab -->
+                            <div id="content-main" class="space-y-4">
+                                <!-- Section: Auto Farm -->
+                                <div class="mb-6">
+                                    <div class="section-header px-3 py-2 rounded-lg mb-3">
+                                        <span class="text-sm font-semibold text-red-400">🔥 Auto Farm</span>
+                                    </div>
+                                    
+                                    <!-- Toggle -->
+                                    <div class="btn-villains rounded-xl p-4 mb-3">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="font-medium">Auto Farm</h4>
+                                                <p class="text-xs text-gray-400">Otomatis farming resource</p>
+                                            </div>
+                                            <div onclick="toggleSwitch(this)" class="toggle-track w-12 h-6 rounded-full relative cursor-pointer">
+                                                <div class="toggle-thumb w-5 h-5 rounded-full absolute top-0.5 left-0.5 bg-white"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Toggle 2 -->
+                                    <div class="btn-villains rounded-xl p-4 mb-3">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="font-medium">Auto Collect</h4>
+                                                <p class="text-xs text-gray-400">Kumpulkan items otomatis</p>
+                                            </div>
+                                            <div onclick="toggleSwitch(this)" class="toggle-track active w-12 h-6 rounded-full relative cursor-pointer">
+                                                <div class="toggle-thumb w-5 h-5 rounded-full absolute top-0.5 left-6 bg-white"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Slider -->
+                                    <div class="btn-villains rounded-xl p-4 mb-3">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <div>
+                                                <h4 class="font-medium">Farm Speed</h4>
+                                                <p class="text-xs text-gray-400">Kecepatan farming</p>
+                                            </div>
+                                            <span class="text-red-400 font-semibold slider-value">50</span>
+                                        </div>
+                                        <div class="slider-container relative h-2 rounded-full cursor-pointer" onmousedown="startSlider(event, this)" ontouchstart="startSlider(event, this)">
+                                            <div class="slider-track absolute inset-0 rounded-full"></div>
+                                            <div class="slider-fill absolute left-0 top-0 bottom-0 rounded-full" style="width: 50%;"></div>
+                                            <div class="slider-thumb absolute w-4 h-4 rounded-full -top-1 cursor-grab" style="left: calc(50% - 8px);"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Button -->
+                                    <button onclick="handleButtonClick('Teleport ke Farm Zone!')" class="btn-villains w-full rounded-xl p-4 text-left hover:border-red-500">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="font-medium">Teleport Farm</h4>
+                                                <p class="text-xs text-gray-400">Teleport ke lokasi farming</p>
+                                            </div>
+                                            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                            </svg>
+                                        </div>
+                                    </button>
+                                </div>
+
+                                <!-- Section: Teleports -->
+                                <div>
+                                    <div class="section-header px-3 py-2 rounded-lg mb-3">
+                                        <span class="text-sm font-semibold text-red-400">📍 Teleports</span>
+                                    </div>
+
+                                    <!-- Dropdown -->
+                                    <div class="btn-villains rounded-xl p-4 mb-3 relative">
+                                        <div class="flex items-center justify-between cursor-pointer" onclick="toggleDropdown(this.parentElement)">
+                                            <div>
+                                                <h4 class="font-medium">Select Location</h4>
+                                                <p class="text-xs text-gray-400">Pilih lokasi teleport</p>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="dropdown-selected text-red-400">Spawn</span>
+                                                <svg class="w-4 h-4 transition-transform dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-menu hidden absolute left-0 right-0 top-full mt-2 rounded-xl overflow-hidden z-20">
+                                            <div class="dropdown-item px-4 py-3 cursor-pointer transition" onclick="selectDropdown(this, 'Spawn')">Spawn</div>
+                                            <div class="dropdown-item px-4 py-3 cursor-pointer transition" onclick="selectDropdown(this, 'Shop')">Shop</div>
+                                            <div class="dropdown-item px-4 py-3 cursor-pointer transition" onclick="selectDropdown(this, 'Boss Arena')">Boss Arena</div>
+                                            <div class="dropdown-item px-4 py-3 cursor-pointer transition" onclick="selectDropdown(this, 'Secret Area')">Secret Area</div>
+                                            <div class="dropdown-item px-4 py-3 cursor-pointer transition" onclick="selectDropdown(this, 'Farm Zone')">Farm Zone</div>
+                                        </div>
+                                    </div>
+
+                                    <button onclick="handleButtonClick('Teleporting...')" class="btn-villains w-full rounded-xl p-4 text-left">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <h4 class="font-medium">Go To Location</h4>
+                                                <p class="text-xs text-gray-400">Teleport ke lokasi terpilih</p>
+                                            </div>
+                                            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            </svg>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Combat Tab -->
+                            <div id="content-combat" class="hidden space-y-4">
+                                <div class="section-header px-3 py-2 rounded-lg mb-3">
+                                    <span class="text-sm font-semibold text-red-400">⚔️ Combat Features</span>
+                                </div>
+                                
+                                <div class="btn-villains rounded-xl p-4 mb-3">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium">Kill Aura</h4>
+                                            <p class="text-xs text-gray-400">Auto attack nearby enemies</p>
+                                        </div>
+                                        <div onclick="toggleSwitch(this)" class="toggle-track w-12 h-6 rounded-full relative cursor-pointer">
+                                            <div class="toggle-thumb w-5 h-5 rounded-full absolute top-0.5 left-0.5 bg-white"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="btn-villains rounded-xl p-4 mb-3">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div>
+                                            <h4 class="font-medium">Attack Range</h4>
+                                            <p class="text-xs text-gray-400">Jarak serangan</p>
+                                        </div>
+                                        <span class="text-red-400 font-semibold slider-value">25</span>
+                                    </div>
+                                    <div class="slider-container relative h-2 rounded-full cursor-pointer" onmousedown="startSlider(event, this)" ontouchstart="startSlider(event, this)">
+                                        <div class="slider-track absolute inset-0 rounded-full"></div>
+                                        <div class="slider-fill absolute left-0 top-0 bottom-0 rounded-full" style="width: 25%;"></div>
+                                        <div class="slider-thumb absolute w-4 h-4 rounded-full -top-1 cursor-grab" style="left: calc(25% - 8px);"></div>
+                                    </div>
+                                </div>
+
+                                <div class="btn-villains rounded-xl p-4 mb-3">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium">Auto Dodge</h4>
+                                            <p class="text-xs text-gray-400">Hindari serangan otomatis</p>
+                                        </div>
+                                        <div onclick="toggleSwitch(this)" class="toggle-track active w-12 h-6 rounded-full relative cursor-pointer">
+                                            <div class="toggle-thumb w-5 h-5 rounded-full absolute top-0.5 left-6 bg-white"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Player Tab -->
+                            <div id="content-player" class="hidden space-y-4">
+                                <div class="section-header px-3 py-2 rounded-lg mb-3">
+                                    <span class="text-sm font-semibold text-red-400">👤 Player Mods</span>
+                                </div>
+                                
+                                <div class="btn-villains rounded-xl p-4 mb-3">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div>
+                                            <h4 class="font-medium">Walk Speed</h4>
+                                            <p class="text-xs text-gray-400">Kecepatan jalan</p>
+                                        </div>
+                                        <span class="text-red-400 font-semibold slider-value">16</span>
+                                    </div>
+                                    <div class="slider-container relative h-2 rounded-full cursor-pointer" onmousedown="startSlider(event, this)" ontouchstart="startSlider(event, this)">
+                                        <div class="slider-track absolute inset-0 rounded-full"></div>
+                                        <div class="slider-fill absolute left-0 top-0 bottom-0 rounded-full" style="width: 16%;"></div>
+                                        <div class="slider-thumb absolute w-4 h-4 rounded-full -top-1 cursor-grab" style="left: calc(16% - 8px);"></div>
+                                    </div>
+                                </div>
+
+                                <div class="btn-villains rounded-xl p-4 mb-3">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div>
+                                            <h4 class="font-medium">Jump Power</h4>
+                                            <p class="text-xs text-gray-400">Kekuatan lompat</p>
+                                        </div>
+                                        <span class="text-red-400 font-semibold slider-value">50</span>
+                                    </div>
+                                    <div class="slider-container relative h-2 rounded-full cursor-pointer" onmousedown="startSlider(event, this)" ontouchstart="startSlider(event, this)">
+                                        <div class="slider-track absolute inset-0 rounded-full"></div>
+                                        <div class="slider-fill absolute left-0 top-0 bottom-0 rounded-full" style="width: 50%;"></div>
+                                        <div class="slider-thumb absolute w-4 h-4 rounded-full -top-1 cursor-grab" style="left: calc(50% - 8px);"></div>
+                                    </div>
+                                </div>
+
+                                <div class="btn-villains rounded-xl p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium">Infinite Jump</h4>
+                                            <p class="text-xs text-gray-400">Lompat tanpa batas</p>
+                                        </div>
+                                        <div onclick="toggleSwitch(this)" class="toggle-track w-12 h-6 rounded-full relative cursor-pointer">
+                                            <div class="toggle-thumb w-5 h-5 rounded-full absolute top-0.5 left-0.5 bg-white"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Misc Tab -->
+                            <div id="content-misc" class="hidden space-y-4">
+                                <div class="section-header px-3 py-2 rounded-lg mb-3">
+                                    <span class="text-sm font-semibold text-red-400">🎮 Miscellaneous</span>
+                                </div>
+                                
+                                <button onclick="handleButtonClick('Anti AFK diaktifkan!')" class="btn-villains w-full rounded-xl p-4 text-left mb-3">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium">Anti AFK</h4>
+                                            <p class="text-xs text-gray-400">Mencegah kick karena AFK</p>
+                                        </div>
+                                        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                        </svg>
+                                    </div>
+                                </button>
+
+                                <div class="btn-villains rounded-xl p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium">ESP Players</h4>
+                                            <p class="text-xs text-gray-400">Lihat player melalui tembok</p>
+                                        </div>
+                                        <div onclick="toggleSwitch(this)" class="toggle-track w-12 h-6 rounded-full relative cursor-pointer">
+                                            <div class="toggle-thumb w-5 h-5 rounded-full absolute top-0.5 left-0.5 bg-white"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Settings Tab -->
+                            <div id="content-settings" class="hidden space-y-4">
+                                <div class="section-header px-3 py-2 rounded-lg mb-3">
+                                    <span class="text-sm font-semibold text-red-400">⚙️ UI Settings</span>
+                                </div>
+                                
+                                <div class="btn-villains rounded-xl p-4 mb-3">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div>
+                                            <h4 class="font-medium">UI Opacity</h4>
+                                            <p class="text-xs text-gray-400">Transparansi UI</p>
+                                        </div>
+                                        <span class="text-red-400 font-semibold slider-value">100</span>
+                                    </div>
+                                    <div class="slider-container relative h-2 rounded-full cursor-pointer" onmousedown="startSlider(event, this)" ontouchstart="startSlider(event, this)">
+                                        <div class="slider-track absolute inset-0 rounded-full"></div>
+                                        <div class="slider-fill absolute left-0 top-0 bottom-0 rounded-full" style="width: 100%;"></div>
+                                        <div class="slider-thumb absolute w-4 h-4 rounded-full -top-1 cursor-grab" style="left: calc(100% - 8px);"></div>
+                                    </div>
+                                </div>
+
+                                <div class="btn-villains rounded-xl p-4 mb-3">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium">Fire Animation</h4>
+                                            <p class="text-xs text-gray-400">Animasi api di background</p>
+                                        </div>
+                                        <div onclick="toggleFireAnimation(this)" class="toggle-track active w-12 h-6 rounded-full relative cursor-pointer">
+                                            <div class="toggle-thumb w-5 h-5 rounded-full absolute top-0.5 left-6 bg-white"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button onclick="handleButtonClick('UI Destroyed!')" class="btn-villains w-full rounded-xl p-4 text-left bg-red-900/30 border-red-500/30">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-red-400">Destroy UI</h4>
+                                            <p class="text-xs text-gray-400">Hapus UI dari game</p>
+                                        </div>
+                                        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Section -->
+    <section id="section-code" class="hidden pt-24 px-4 pb-10 min-h-screen">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2"><span class="text-red-500">Lua</span> Source Code</h2>
+                <p class="text-gray-400">ModuleScript lengkap untuk Villains UI Library</p>
+            </div>
+
+            <div class="code-block rounded-2xl overflow-hidden">
+                <div class="flex items-center justify-between px-4 py-3 bg-red-900/20 border-b border-red-900/30">
+                    <span class="text-sm font-medium text-red-400">VillainsUI.lua (ModuleScript)</span>
+                    <button onclick="copyCode()" class="copy-btn px-4 py-1.5 rounded-lg bg-red-900/30 text-sm font-medium hover:bg-red-600 transition">Copy</button>
+                </div>
+                <pre class="p-4 overflow-x-auto text-sm leading-relaxed" style="max-height: 600px;"><code id="lua-code" class="text-gray-300">--[[
+    ██╗   ██╗██╗██╗     ██╗      █████╗ ██╗███╗   ██╗███████╗    ██╗   ██╗██╗
+    ██║   ██║██║██║     ██║     ██╔══██╗██║████╗  ██║██╔════╝    ██║   ██║██║
+    ██║   ██║██║██║     ██║     ███████║██║██╔██╗ ██║███████╗    ██║   ██║██║
+    ╚██╗ ██╔╝██║██║     ██║     ██╔══██║██║██║╚██╗██║╚════██║    ██║   ██║██║
+     ╚████╔╝ ██║███████╗███████╗██║  ██║██║██║ ╚████║███████║    ╚██████╔╝██║
+      ╚═══╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝     ╚═════╝ ╚═╝
+    
+    Villains UI Library v2.0
+    Created by VillainsTeam
+    Modern • Minimalist • Aesthetic • OOP Based
+--]]
+
+local VillainsUI = {}
+VillainsUI.__index = VillainsUI
+
+-- Services
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
+
+-- Theme Configuration
+local Theme = {
+    Primary = Color3.fromRGB(220, 38, 38),      -- Red
+    Secondary = Color3.fromRGB(26, 26, 26),     -- Dark Gray
+    Background = Color3.fromRGB(13, 13, 13),    -- Black
+    Accent = Color3.fromRGB(239, 68, 68),       -- Light Red
+    Text = Color3.fromRGB(255, 255, 255),       -- White
+    TextDark = Color3.fromRGB(156, 163, 175),   -- Gray
+    Success = Color3.fromRGB(34, 197, 94),      -- Green
+    Warning = Color3.fromRGB(234, 179, 8),      -- Yellow
+    Error = Color3.fromRGB(239, 68, 68),        -- Red
+    CornerRadius = UDim.new(0, 12),
+    Font = Enum.Font.GothamSemibold
+}
+
+-- Utility Functions
+local function Create(instanceType, properties)
+    local instance = Instance.new(instanceType)
+    for prop, value in pairs(properties) do
+        if prop ~= "Parent" then
+            instance[prop] = value
+        end
+    end
+    if properties.Parent then
+        instance.Parent = properties.Parent
+    end
+    return instance
+end
+
+local function Tween(object, properties, duration, style, direction)
+    local tweenInfo = TweenInfo.new(
+        duration or 0.3,
+        style or Enum.EasingStyle.Quint,
+        direction or Enum.EasingDirection.Out
+    )
+    local tween = TweenService:Create(object, tweenInfo, properties)
+    tween:Play()
+    return tween
+end
+
+local function AddCorner(parent, radius)
+    return Create("UICorner", {
+        CornerRadius = radius or Theme.CornerRadius,
+        Parent = parent
+    })
+end
+
+local function AddStroke(parent, color, thickness)
+    return Create("UIStroke", {
+        Color = color or Theme.Primary,
+        Thickness = thickness or 1,
+        Transparency = 0.7,
+        Parent = parent
+    })
+end
+
+-- Key System Module
+local KeySystem = {}
+KeySystem.__index = KeySystem
+
+function KeySystem.new(settings)
+    local self = setmetatable({}, KeySystem)
+    self.Keys = settings.Keys or {}
+    self.KeyLink = settings.KeyLink or ""
+    self.LinkType = settings.LinkType or "platoboost" -- platoboost, workink, linkvertise
+    self.SaveKey = settings.SaveKey ~= false
+    self.KeyName = settings.KeyName or "VillainsUI_Key"
+    return self
+end
+
+function KeySystem:GetKeyLink()
+    local links = {
+        platoboost = "https://gateway.platoboost.com/a/YOUR_ID",
+        workink = "https://work.ink/YOUR_LINK",
+        linkvertise = "https://linkvertise.com/YOUR_ID"
+    }
+    return self.KeyLink ~= "" and self.KeyLink or links[self.LinkType]
+end
+
+function KeySystem:ValidateKey(inputKey)
+    for _, key in ipairs(self.Keys) do
+        if inputKey == key then
+            if self.SaveKey then
+                writefile(self.KeyName .. ".txt", inputKey)
+            end
+            return true
+        end
+    end
+    return false
+end
+
+function KeySystem:CheckSavedKey()
+    if self.SaveKey and isfile(self.KeyName .. ".txt") then
+        local savedKey = readfile(self.KeyName .. ".txt")
+        return self:ValidateKey(savedKey)
+    end
+    return false
+end
+
+-- Window Class
+local Window = {}
+Window.__index = Window
+
+function VillainsUI:CreateWindow(settings)
+    local self = setmetatable({}, Window)
+    
+    self.Title = settings.Title or "Villains UI"
+    self.Subtitle = settings.Subtitle or "by VillainsTeam"
+    self.LogoId = settings.LogoId or "rbxassetid://0"
+    self.KeySystem = settings.KeySystem or false
+    self.Keys = settings.Keys or {}
+    self.KeyLink = settings.KeyLink or ""
+    self.LinkType = settings.LinkType or "platoboost"
+    self.SaveKey = settings.SaveKey ~= false
+    self.Size = settings.Size or UDim2.new(0, 600, 0, 450)
+    self.Tabs = {}
+    self.CurrentTab = nil
+    self.Minimized = false
+    self.FireEnabled = true
+    
+    -- Create ScreenGui
+    local success, gui = pcall(function()
+        local screenGui = Create("ScreenGui", {
+            Name = "VillainsUI",
+            ResetOnSpawn = false,
+            ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+        })
+        
+        -- Try CoreGui first, fallback to PlayerGui
+        pcall(function()
+            screenGui.Parent = CoreGui
+        end)
+        
+        if not screenGui.Parent then
+            screenGui.Parent = Player:WaitForChild("PlayerGui")
+        end
+        
+        return screenGui
+    end)
+    
+    self.ScreenGui = gui
+    
+    -- Key System UI
+    if self.KeySystem then
+        self:CreateKeySystemUI()
+    else
+        self:CreateMainUI()
+    end
+    
+    return self
+end
+
+function Window:CreateKeySystemUI()
+    local KeyFrame = Create("Frame", {
+        Name = "KeySystem",
+        Size = UDim2.new(0, 350, 0, 300),
+        Position = UDim2.new(0.5, -175, 0.5, -150),
+        BackgroundColor3 = Theme.Background,
+        Parent = self.ScreenGui
+    })
+    AddCorner(KeyFrame)
+    AddStroke(KeyFrame, Theme.Primary, 1)
+    
+    -- Logo
+    local Logo = Create("ImageLabel", {
+        Name = "Logo",
+        Size = UDim2.new(0, 60, 0, 60),
+        Position = UDim2.new(0.5, -30, 0, 20),
+        BackgroundColor3 = Theme.Primary,
+        Image = self.LogoId,
+        Parent = KeyFrame
+    })
+    AddCorner(Logo, UDim.new(1, 0))
+    
+    -- Title
+    local Title = Create("TextLabel", {
+        Name = "Title",
+        Size = UDim2.new(1, 0, 0, 25),
+        Position = UDim2.new(0, 0, 0, 90),
+        BackgroundTransparency = 1,
+        Text = "Key System",
+        TextColor3 = Theme.Text,
+        TextSize = 20,
+        Font = Theme.Font,
+        Parent = KeyFrame
+    })
+    
+    -- Description
+    local Desc = Create("TextLabel", {
+        Name = "Desc",
+        Size = UDim2.new(1, -40, 0, 20),
+        Position = UDim2.new(0, 20, 0, 115),
+        BackgroundTransparency = 1,
+        Text = "Get your key from the link below",
+        TextColor3 = Theme.TextDark,
+        TextSize = 12,
+        Font = Enum.Font.Gotham,
+        Parent = KeyFrame
+    })
+    
+    -- Key Links Buttons
+    local LinksContainer = Create("Frame", {
+        Name = "Links",
+        Size = UDim2.new(1, -40, 0, 35),
+        Position = UDim2.new(0, 20, 0, 145),
+        BackgroundTransparency = 1,
+        Parent = KeyFrame
+    })
+    
+    local UIListLayout = Create("UIListLayout", {
+        FillDirection = Enum.FillDirection.Horizontal,
+        HorizontalAlignment = Enum.HorizontalAlignment.Center,
+        Padding = UDim.new(0, 8),
+        Parent = LinksContainer
+    })
+    
+    local linkButtons = {"Platoboost", "Work.ink", "Linkvertise"}
+    local linkColors = {
+        Color3.fromRGB(138, 43, 226),
+        Color3.fromRGB(59, 130, 246),
+        Color3.fromRGB(34, 197, 94)
+    }
+    
+    for i, linkName in ipairs(linkButtons) do
+        local LinkBtn = Create("TextButton", {
+            Name = linkName,
+            Size = UDim2.new(0, 90, 1, 0),
+            BackgroundColor3 = linkColors[i],
+            Text = linkName,
+            TextColor3 = Theme.Text,
+            TextSize = 11,
+            Font = Theme.Font,
+            Parent = LinksContainer
+        })
+        AddCorner(LinkBtn, UDim.new(0, 8))
+        
+        LinkBtn.MouseButton1Click:Connect(function()
+            setclipboard(self.KeyLink)
+            self:Notify("Link Copied!", "Key link copied to clipboard", "success")
+        end)
+    end
+    
+    -- Key Input
+    local KeyInput = Create("TextBox", {
+        Name = "KeyInput",
+        Size = UDim2.new(1, -40, 0, 40),
+        Position = UDim2.new(0, 20, 0, 195),
+        BackgroundColor3 = Theme.Secondary,
+        Text = "",
+        PlaceholderText = "Enter your key...",
+        TextColor3 = Theme.Text,
+        PlaceholderColor3 = Theme.TextDark,
+        TextSize = 14,
+        Font = Enum.Font.Gotham,
+        ClearTextOnFocus = false,
+        Parent = KeyFrame
+    })
+    AddCorner(KeyInput)
+    AddStroke(KeyInput, Theme.Primary, 1)
+    
+    -- Verify Button
+    local VerifyBtn = Create("TextButton", {
+        Name = "Verify",
+        Size = UDim2.new(1, -40, 0, 40),
+        Position = UDim2.new(0, 20, 0, 245),
+        BackgroundColor3 = Theme.Primary,
+        Text = "Verify Key",
+        TextColor3 = Theme.Text,
+        TextSize = 14,
+        Font = Theme.Font,
+        Parent = KeyFrame
+    })
+    AddCorner(VerifyBtn)
+    
+    VerifyBtn.MouseButton1Click:Connect(function()
+        local inputKey = KeyInput.Text
+        local valid = false
+        
+        for _, key in ipairs(self.Keys) do
+            if inputKey == key then
+                valid = true
+                break
+            end
+        end
+        
+        if valid then
+            self:Notify("Success!", "Key verified successfully", "success")
+            Tween(KeyFrame, {Position = UDim2.new(0.5, -175, 1.5, 0)}, 0.5)
+            wait(0.5)
+            KeyFrame:Destroy()
+            self:CreateMainUI()
+        else
+            self:Notify("Error!", "Invalid key", "error")
+            Tween(KeyInput, {Position = UDim2.new(0, 15, 0, 195)}, 0.05)
+            wait(0.05)
+            Tween(KeyInput, {Position = UDim2.new(0, 25, 0, 195)}, 0.05)
+            wait(0.05)
+            Tween(KeyInput, {Position = UDim2.new(0, 20, 0, 195)}, 0.05)
+        end
+    end)
+    
+    self.KeyFrame = KeyFrame
+end
+
+function Window:CreateMainUI()
+    -- Main Frame
+    local MainFrame = Create("Frame", {
+        Name = "MainFrame",
+        Size = self.Size,
+        Position = UDim2.new(0.5, -self.Size.X.Offset/2, 0.5, -self.Size.Y.Offset/2),
+        BackgroundColor3 = Theme.Background,
+        ClipsDescendants = true,
+        Parent = self.ScreenGui
+    })
+    AddCorner(MainFrame)
+    AddStroke(MainFrame, Theme.Primary, 1)
+    
+    self.MainFrame = MainFrame
+    
+    -- Fire Animation Container
+    local FireContainer = Create("Frame", {
+        Name = "FireContainer",
+        Size = UDim2.new(1, 0, 0, 80),
+        Position = UDim2.new(0, 0, 1, -80),
+        BackgroundTransparency = 1,
+        ClipsDescendants = true,
+        ZIndex = 0,
+        Parent = MainFrame
+    })
+    
+    self.FireContainer = FireContainer
+    self:StartFireAnimation()
+    
+    -- Title Bar
+    local TitleBar = Create("Frame", {
+        Name = "TitleBar",
+        Size = UDim2.new(1, 0, 0, 45),
+        BackgroundColor3 = Theme.Secondary,
+        BackgroundTransparency = 0.5,
+        Parent = MainFrame
+    })
+    AddCorner(TitleBar)
+    
+    -- Logo
+    local Logo = Create("ImageLabel", {
+        Name = "Logo",
+        Size = UDim2.new(0, 30, 0, 30),
+        Position = UDim2.new(0, 10, 0.5, -15),
+        BackgroundColor3 = Theme.Primary,
+        Image = self.LogoId,
+        Parent = TitleBar
+    })
+    AddCorner(Logo, UDim.new(1, 0))
+    
+    -- Title Text
+    local TitleText = Create("TextLabel", {
+        Name = "Title",
+        Size = UDim2.new(0, 200, 0, 20),
+        Position = UDim2.new(0, 50, 0, 8),
+        BackgroundTransparency = 1,
+        Text = self.Title,
+        TextColor3 = Theme.Text,
+        TextSize = 14,
+        Font = Theme.Font,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = TitleBar
+    })
+    
+    local SubtitleText = Create("TextLabel", {
+        Name = "Subtitle",
+        Size = UDim2.new(0, 200, 0, 14),
+        Position = UDim2.new(0, 50, 0, 26),
+        BackgroundTransparency = 1,
+        Text = self.Subtitle,
+        TextColor3 = Theme.TextDark,
+        TextSize = 10,
+        Font = Enum.Font.Gotham,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = TitleBar
+    })
+    
+    -- Window Controls
+    local Controls = Create("Frame", {
+        Name = "Controls",
+        Size = UDim2.new(0, 70, 0, 30),
+        Position = UDim2.new(1, -80, 0.5, -15),
+        BackgroundTransparency = 1,
+        Parent = TitleBar
+    })
+    
+    -- Minimize Button
+    local MinBtn = Create("TextButton", {
+        Name = "Minimize",
+        Size = UDim2.new(0, 30, 0, 30),
+        Position = UDim2.new(0, 0, 0, 0),
+        BackgroundColor3 = Color3.fromRGB(234, 179, 8),
+        BackgroundTransparency = 0.8,
+        Text = "-",
+        TextColor3 = Color3.fromRGB(234, 179, 8),
+        TextSize = 20,
+        Font = Theme.Font,
+        Parent = Controls
+    })
+    AddCorner(MinBtn, UDim.new(0, 8))
+    
+    -- Close Button
+    local CloseBtn = Create("TextButton", {
+        Name = "Close",
+        Size = UDim2.new(0, 30, 0, 30),
+        Position = UDim2.new(0, 35, 0, 0),
+        BackgroundColor3 = Theme.Primary,
+        BackgroundTransparency = 0.8,
+        Text = "×",
+        TextColor3 = Theme.Primary,
+        TextSize = 20,
+        Font = Theme.Font,
+        Parent = Controls
+    })
+    AddCorner(CloseBtn, UDim.new(0, 8))
+    
+    -- Minimize Logo (Hidden initially)
+    local MinLogo = Create("ImageButton", {
+        Name = "MinimizedLogo",
+        Size = UDim2.new(0, 50, 0, 50),
+        Position = UDim2.new(1, -70, 1, -70),
+        BackgroundColor3 = Theme.Primary,
+        Image = self.LogoId,
+        Visible = false,
+        Parent = self.ScreenGui
+    })
+    AddCorner(MinLogo, UDim.new(1, 0))
+    
+    self.MinLogo = MinLogo
+    
+    -- Button Events
+    MinBtn.MouseButton1Click:Connect(function()
+        self:ToggleMinimize()
+    end)
+    
+    CloseBtn.MouseButton1Click:Connect(function()
+        self:Destroy()
+    end)
+    
+    MinLogo.MouseButton1Click:Connect(function()
+        self:ToggleMinimize()
+    end)
+    
+    -- Make Draggable
+    self:MakeDraggable(TitleBar, MainFrame)
+    self:MakeDraggable(MinLogo, MinLogo)
+    
+    -- Tab Container
+    local TabContainer = Create("ScrollingFrame", {
+        Name = "TabContainer",
+        Size = UDim2.new(0, 140, 1, -55),
+        Position = UDim2.new(0, 5, 0, 50),
+        BackgroundColor3 = Theme.Secondary,
+        BackgroundTransparency = 0.7,
+        ScrollBarThickness = 2,
+        ScrollBarImageColor3 = Theme.Primary,
+        CanvasSize = UDim2.new(0, 0, 0, 0),
+        AutomaticCanvasSize = Enum.AutomaticSize.Y,
+        Parent = MainFrame
+    })
+    AddCorner(TabContainer, UDim.new(0, 8))
+    
+    local TabListLayout = Create("UIListLayout", {
+        Padding = UDim.new(0, 5),
+        Parent = TabContainer
+    })
+    
+    local TabPadding = Create("UIPadding", {
+        PaddingTop = UDim.new(0, 5),
+        PaddingBottom = UDim.new(0, 5),
+        PaddingLeft = UDim.new(0, 5),
+        PaddingRight = UDim.new(0, 5),
+        Parent = TabContainer
+    })
+    
+    self.TabContainer = TabContainer
+    
+    -- Content Container
+    local ContentContainer = Create("Frame", {
+        Name = "ContentContainer",
+        Size = UDim2.new(1, -160, 1, -55),
+        Position = UDim2.new(0, 155, 0, 50),
+        BackgroundTransparency = 1,
+        ClipsDescendants = true,
+        Parent = MainFrame
+    })
+    
+    self.ContentContainer = ContentContainer
+end
+
+function Window:StartFireAnimation()
+    if not self.FireContainer then return end
+    
+    spawn(function()
+        while self.FireEnabled and self.FireContainer and self.FireContainer.Parent do
+            local particle = Create("Frame", {
+                Size = UDim2.new(0, math.random(10, 25), 0, math.random(10, 25)),
+                Position = UDim2.new(math.random(0, 100)/100, 0, 1, 0),
+                BackgroundColor3 = Color3.fromRGB(
+                    math.random(200, 255),
+                    math.random(50, 100),
+                    0
+                ),
+                BackgroundTransparency = 0.3,
+                Parent = self.FireContainer
+            })
+            AddCorner(particle, UDim.new(1, 0))
+            
+            local duration = math.random(10, 20) / 10
+            Tween(particle, {
+                Position = UDim2.new(particle.Position.X.Scale, 0, -0.5, 0),
+                Size = UDim2.new(0, 5, 0, 5),
+                BackgroundTransparency = 1
+            }, duration)
+            
+            game:GetService("Debris"):AddItem(particle, duration)
+            wait(0.05)
+        end
+    end)
+end
+
+function Window:ToggleMinimize()
+    self.Minimized = not self.Minimized
+    
+    if self.Minimized then
+        Tween(self.MainFrame, {Size = UDim2.new(0, 0, 0, 0)}, 0.3)
+        wait(0.3)
+        self.MainFrame.Visible = false
+        self.MinLogo.Visible = true
+        Tween(self.MinLogo, {Size = UDim2.new(0, 50, 0, 50)}, 0.3)
+    else
+        self.MinLogo.Visible = false
+        self.MainFrame.Visible = true
+        Tween(self.MainFrame, {Size = self.Size}, 0.3)
+    end
+end
+
+function Window:MakeDraggable(dragObject, targetObject)
+    local dragging = false
+    local dragInput, mousePos, framePos
+    
+    dragObject.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or 
+           input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            mousePos = input.Position
+            framePos = targetObject.Position
+            
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+    
+    dragObject.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or 
+           input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+    
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - mousePos
+            Tween(targetObject, {
+                Position = UDim2.new(
+                    framePos.X.Scale,
+                    framePos.X.Offset + delta.X,
+                    framePos.Y.Scale,
+                    framePos.Y.Offset + delta.Y
+                )
+            }, 0.1)
+        end
+    end)
+end
+
+function Window:Destroy()
+    if self.ScreenGui then
+        Tween(self.MainFrame, {Size = UDim2.new(0, 0, 0, 0)}, 0.3)
+        wait(0.3)
+        self.ScreenGui:Destroy()
+    end
+end
+
+function Window:Notify(title, message, notifType)
+    local colors = {
+        success = Theme.Success,
+        warning = Theme.Warning,
+        error = Theme.Error,
+        info = Theme.Primary
+    }
+    
+    local color = colors[notifType] or Theme.Primary
+    
+    local NotifFrame = Create("Frame", {
+        Name = "Notification",
+        Size = UDim2.new(0, 280, 0, 70),
+        Position = UDim2.new(1, 300, 0, 10),
+        BackgroundColor3 = Theme.Background,
+        Parent = self.ScreenGui
+    })
+    AddCorner(NotifFrame)
+    AddStroke(NotifFrame, color, 1)
+    
+    local Accent = Create("Frame", {
+        Size = UDim2.new(0, 4, 1, -10),
+        Position = UDim2.new(0, 5, 0, 5),
+        BackgroundColor3 = color,
+        Parent = NotifFrame
+    })
+    AddCorner(Accent, UDim.new(0, 2))
+    
+    local Title = Create("TextLabel", {
+        Size = UDim2.new(1, -25, 0, 25),
+        Position = UDim2.new(0, 20, 0, 10),
+        BackgroundTransparency = 1,
+        Text = title,
+        TextColor3 = color,
+        TextSize = 14,
+        Font = Theme.Font,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = NotifFrame
+    })
+    
+    local Message = Create("TextLabel", {
+        Size = UDim2.new(1, -25, 0, 30),
+        Position = UDim2.new(0, 20, 0, 32),
+        BackgroundTransparency = 1,
+        Text = message,
+        TextColor3 = Theme.TextDark,
+        TextSize = 12,
+        Font = Enum.Font.Gotham,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        TextWrapped = true,
+        Parent = NotifFrame
+    })
+    
+    Tween(NotifFrame, {Position = UDim2.new(1, -290, 0, 10)}, 0.5)
+    
+    wait(3)
+    
+    Tween(NotifFrame, {Position = UDim2.new(1, 300, 0, 10)}, 0.5)
+    wait(0.5)
+    NotifFrame:Destroy()
+end
+
+-- Tab Class
+local Tab = {}
+Tab.__index = Tab
+
+function Window:CreateTab(settings)
+    local tab = setmetatable({}, Tab)
+    
+    tab.Name = settings.Name or "Tab"
+    tab.Icon = settings.Icon or "rbxassetid://0"
+    tab.Window = self
+    tab.Elements = {}
+    
+    -- Tab Button
+    local TabBtn = Create("TextButton", {
+        Name = tab.Name,
+        Size = UDim2.new(1, 0, 0, 40),
+        BackgroundColor3 = Theme.Secondary,
+        BackgroundTransparency = 0.5,
+        Text = "",
+        Parent = self.TabContainer
+    })
+    AddCorner(TabBtn, UDim.new(0, 8))
+    
+    local TabIcon = Create("ImageLabel", {
+        Size = UDim2.new(0, 18, 0, 18),
+        Position = UDim2.new(0, 10, 0.5, -9),
+        BackgroundTransparency = 1,
+        Image = tab.Icon,
+        ImageColor3 = Theme.TextDark,
+        Parent = TabBtn
+    })
+    
+    local TabText = Create("TextLabel", {
+        Size = UDim2.new(1, -40, 1, 0),
+        Position = UDim2.new(0, 35, 0, 0),
+        BackgroundTransparency = 1,
+        Text = tab.Name,
+        TextColor3 = Theme.TextDark,
+        TextSize = 12,
+        Font = Theme.Font,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = TabBtn
+    })
+    
+    tab.Button = TabBtn
+    tab.Icon = TabIcon
+    tab.Text = TabText
+    
+    -- Tab Content
+    local TabContent = Create("ScrollingFrame", {
+        Name = tab.Name .. "Content",
+        Size = UDim2.new(1, 0, 1, 0),
+        BackgroundTransparency = 1,
+        ScrollBarThickness = 3,
+        ScrollBarImageColor3 = Theme.Primary,
+        CanvasSize = UDim2.new(0, 0, 0, 0),
+        AutomaticCanvasSize = Enum.AutomaticSize.Y,
+        Visible = false,
+        Parent = self.ContentContainer
+    })
+    
+    local ContentLayout = Create("UIListLayout", {
+        Padding = UDim.new(0, 8),
+        Parent = TabContent
+    })
+    
+    local ContentPadding = Create("UIPadding", {
+        PaddingTop = UDim.new(0, 5),
+        PaddingBottom = UDim.new(0, 5),
+        PaddingLeft = UDim.new(0, 5),
+        PaddingRight = UDim.new(0, 5),
+        Parent = TabContent
+    })
+    
+    tab.Content = TabContent
+    
+    -- Tab Selection
+    TabBtn.MouseButton1Click:Connect(function()
+        for _, t in ipairs(self.Tabs) do
+            t.Content.Visible = false
+            Tween(t.Button, {BackgroundTransparency = 0.5}, 0.2)
+            Tween(t.Icon, {ImageColor3 = Theme.TextDark}, 0.2)
+            t.Text.TextColor3 = Theme.TextDark
+        end
+        
+        tab.Content.Visible = true
+        Tween(TabBtn, {BackgroundTransparency = 0.3}, 0.2)
+        Tween(TabIcon, {ImageColor3 = Theme.Primary}, 0.2)
+        TabText.TextColor3 = Theme.Text
+        
+        self.CurrentTab = tab
+    end)
+    
+    -- Hover Effects
+    TabBtn.MouseEnter:Connect(function()
+        if self.CurrentTab ~= tab then
+            Tween(TabBtn, {BackgroundTransparency = 0.4}, 0.2)
+        end
+    end)
+    
+    TabBtn.MouseLeave:Connect(function()
+        if self.CurrentTab ~= tab then
+            Tween(TabBtn, {BackgroundTransparency = 0.5}, 0.2)
+        end
+    end)
+    
+    table.insert(self.Tabs, tab)
+    
+    -- Select first tab by default
+    if #self.Tabs == 1 then
+        TabBtn.BackgroundTransparency = 0.3
+        TabIcon.ImageColor3 = Theme.Primary
+        TabText.TextColor3 = Theme.Text
+        TabContent.Visible = true
+        self.CurrentTab = tab
+    end
+    
+    return tab
+end
+
+-- Section
+function Tab:CreateSection(name)
+    local Section = Create("Frame", {
+        Name = "Section_" .. name,
+        Size = UDim2.new(1, 0, 0, 30),
+        BackgroundColor3 = Theme.Primary,
+        BackgroundTransparency = 0.9,
+        Parent = self.Content
+    })
+    AddCorner(Section, UDim.new(0, 6))
+    
+    local SectionText = Create("TextLabel", {
+        Size = UDim2.new(1, -20, 1, 0),
+        Position = UDim2.new(0, 10, 0, 0),
+        BackgroundTransparency = 1,
+        Text = "🔥 " .. name,
+        TextColor3 = Theme.Primary,
+        TextSize = 12,
+        Font = Theme.Font,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = Section
+    })
+    
+    return Section
+end
+
+-- Button
+function Tab:CreateButton(settings)
+    local Button = Create("TextButton", {
+        Name = "Button_" .. settings.Name,
+        Size = UDim2.new(1, 0, 0, 50),
+        BackgroundColor3 = Theme.Secondary,
+        Text = "",
+        Parent = self.Content
+    })
+    AddCorner(Button)
+    AddStroke(Button, Theme.Primary, 1)
+    
+    local ButtonText = Create("TextLabel", {
+        Size = UDim2.new(1, -50, 0, 20),
+        Position = UDim2.new(0, 15, 0, 8),
+        BackgroundTransparency = 1,
+        Text = settings.Name,
+        TextColor3 = Theme.Text,
+        TextSize = 13,
+        Font = Theme.Font,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = Button
+    })
+    
+    local ButtonDesc = Create("TextLabel", {
+        Size = UDim2.new(1, -50, 0, 15),
+        Position = UDim2.new(0, 15, 0, 28),
+        BackgroundTransparency = 1,
+        Text = settings.Description or "Click to execute",
+        TextColor3 = Theme.TextDark,
+        TextSize = 11,
+        Font = Enum.Font.Gotham,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = Button
+    })
+    
+    local ButtonIcon = Create("ImageLabel", {
+        Size = UDim2.new(0, 20, 0, 20),
+        Position = UDim2.new(1, -35, 0.5, -10),
+        BackgroundTransparency = 1,
+        Image = "rbxassetid://7072718362",
+        ImageColor3 = Theme.Primary,
+        Parent = Button
+    })
+    
+    Button.MouseButton1Click:Connect(function()
+        Tween(Button, {BackgroundColor3 = Theme.Primary}, 0.1)
+        wait(0.1)
+        Tween(Button, {BackgroundColor3 = Theme.Secondary}, 0.1)
+        
+        if settings.Callback then
+            settings.Callback()
+        end
+        
+        self.Window:Notify("Button Clicked", settings.Name .. " executed!", "info")
+    end)
+    
+    Button.MouseEnter:Connect(function()
+        Tween(Button, {BackgroundColor3 = Color3.fromRGB(35, 35, 35)}, 0.2)
+    end)
+    
+    Button.MouseLeave:Connect(function()
+        Tween(Button, {BackgroundColor3 = Theme.Secondary}, 0.2)
+    end)
+    
+    return Button
+end
+
+-- Toggle
+function Tab:CreateToggle(settings)
+    local toggled = settings.Default or false
+    
+    local Toggle = Create("Frame", {
+        Name = "Toggle_" .. settings.Name,
+        Size = UDim2.new(1, 0, 0, 50),
+        BackgroundColor3 = Theme.Secondary,
+        Parent = self.Content
+    })
+    AddCorner(Toggle)
+    AddStroke(Toggle, Theme.Primary, 1)
+    
+    local ToggleText = Create("TextLabel", {
+        Size = UDim2.new(1, -70, 0, 20),
+        Position = UDim2.new(0, 15, 0, 8),
+        BackgroundTransparency = 1,
+        Text = settings.Name,
+        TextColor3 = Theme.Text,
+        TextSize = 13,
+        Font = Theme.Font,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = Toggle
+    })
+    
+    local ToggleDesc = Create("TextLabel", {
+        Size = UDim2.new(1, -70, 0, 15),
+        Position = UDim2.new(0, 15, 0, 28),
+        BackgroundTransparency = 1,
+        Text = settings.Description or "Toggle this feature",
+        TextColor3 = Theme.TextDark,
+        TextSize = 11,
+        Font = Enum.Font.Gotham,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = Toggle
+    })
+    
+    local ToggleTrack = Create("Frame", {
+        Name = "Track",
+        Size = UDim2.new(0, 44, 0, 24),
+        Position = UDim2.new(1, -55, 0.5, -12),
+        BackgroundColor3 = toggled and Theme.Primary or Theme.Secondary,
+        Parent = Toggle
+    })
+    AddCorner(ToggleTrack, UDim.new(1, 0))
+    AddStroke(ToggleTrack, Theme.Primary, 1)
+    
+    local ToggleThumb = Create("Frame", {
+        Name = "Thumb",
+        Size = UDim2.new(0, 18, 0, 18),
+        Position = toggled and UDim2.new(1, -21, 0.5, -9) or UDim2.new(0, 3, 0.5, -9),
+        BackgroundColor3 = Theme.Text,
+        Parent = ToggleTrack
+    })
+    AddCorner(ToggleThumb, UDim.new(1, 0))
+    
+    local function UpdateToggle()
+        toggled = not toggled
+        
+        Tween(ToggleThumb, {
+            Position = toggled and UDim2.new(1, -21, 0.5, -9) or UDim2.new(0, 3, 0.5, -9)
+        }, 0.3, Enum.EasingStyle.Back)
+        
+        Tween(ToggleTrack, {
+            BackgroundColor3 = toggled and Theme.Primary or Theme.Secondary
+        }, 0.2)
+        
+        if settings.Callback then
+            settings.Callback(toggled)
+        end
+        
+        self.Window:Notify(
+            toggled and "Enabled" or "Disabled",
+            settings.Name .. " is now " .. (toggled and "ON" or "OFF"),
+            toggled and "success" or "warning"
+        )
+    end
+    
+    local ToggleBtn = Create("TextButton", {
+        Size = UDim2.new(1, 0, 1, 0),
+        BackgroundTransparency = 1,
+        Text = "",
+        Parent = Toggle
+    })
+    
+    ToggleBtn.MouseButton1Click:Connect(UpdateToggle)
+    
+    return {
+        Set = function(value)
+            if toggled ~= value then
+                UpdateToggle()
+            end
+        end,
+        Get = function()
+            return toggled
+        end
+    }
+end
+
+-- Slider
+function Tab:CreateSlider(settings)
+    local value = settings.Default or settings.Min or 0
+    local min = settings.Min or 0
+    local max = settings.Max or 100
+    local dragging = false
+    
+    local Slider = Create("Frame", {
+        Name = "Slider_" .. settings.Name,
+        Size = UDim2.new(1, 0, 0, 60),
+        BackgroundColor3 = Theme.Secondary,
+        Parent = self.Content
+    })
+    AddCorner(Slider)
+    AddStroke(Slider, Theme.Primary, 1)
+    
+    local SliderText = Create("TextLabel", {
+        Size = UDim2.new(1, -70, 0, 20),
+        Position = UDim2.new(0, 15, 0, 8),
+        BackgroundTransparency = 1,
+        Text = settings.Name,
+        TextColor3 = Theme.Text,
+        TextSize = 13,
+        Font = Theme.Font,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = Slider
+    })
+    
+    local SliderValue = Create("TextLabel", {
+        Size = UDim2.new(0, 50, 0, 20),
+        Position = UDim2.new(1, -60, 0, 8),
+        BackgroundTransparency = 1,
+        Text = tostring(value),
+        TextColor3 = Theme.Primary,
+        TextSize = 14,
+        Font = Theme.Font,
+        Parent = Slider
+    })
+    
+    local SliderTrack = Create("Frame", {
+        Name = "Track",
+        Size = UDim2.new(1, -30, 0, 8),
+        Position = UDim2.new(0, 15, 0, 40),
+        BackgroundColor3 = Color3.fromRGB(40, 40, 40),
+        Parent = Slider
+    })
+    AddCorner(SliderTrack, UDim.new(1, 0))
+    
+    local SliderFill = Create("Frame", {
+        Name = "Fill",
+        Size = UDim2.new((value - min) / (max - min), 0, 1, 0),
+        BackgroundColor3 = Theme.Primary,
+        Parent = SliderTrack
+    })
+    AddCorner(SliderFill, UDim.new(1, 0))
+    
+    local SliderThumb = Create("Frame", {
+        Name = "Thumb",
+        Size = UDim2.new(0, 16, 0, 16),
+        Position = UDim2.new((value - min) / (max - min), -8, 0.5, -8),
+        BackgroundColor3 = Theme.Text,
+        ZIndex = 2,
+        Parent = SliderTrack
+    })
+    AddCorner(SliderThumb, UDim.new(1, 0))
+    
+    local SliderBtn = Create("TextButton", {
+        Size = UDim2.new(1, 0, 1, 0),
+        BackgroundTransparency = 1,
+        Text = "",
+        Parent = SliderTrack
+    })
+    
+    local function UpdateSlider(input)
+        local pos = math.clamp(
+            (input.Position.X - SliderTrack.AbsolutePosition.X) / SliderTrack.AbsoluteSize.X,
+            0, 1
+        )
+        value = math.floor(min + (max - min) * pos)
+        
+        Tween(SliderFill, {Size = UDim2.new(pos, 0, 1, 0)}, 0.1)
+        Tween(SliderThumb, {Position = UDim2.new(pos, -8, 0.5, -8)}, 0.1)
+        SliderValue.Text = tostring(value)
+        
+        if settings.Callback then
+            settings.Callback(value)
+        end
+    end
+    
+    SliderBtn.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or 
+           input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            UpdateSlider(input)
+        end
+    end)
+    
+    SliderBtn.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or 
+           input.UserInputType == Enum.UserInputType.Touch then
+            dragging = false
+        end
+    end)
+    
+    UserInputService.InputChanged:Connect(function(input)
+        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or 
+           input.UserInputType == Enum.UserInputType.Touch) then
+            UpdateSlider(input)
+        end
+    end)
+    
+    return {
+        Set = function(newValue)
+            value = math.clamp(newValue, min, max)
+            local pos = (value - min) / (max - min)
+            SliderFill.Size = UDim2.new(pos, 0, 1, 0)
+            SliderThumb.Position = UDim2.new(pos, -8, 0.5, -8)
+            SliderValue.Text = tostring(value)
+        end,
+        Get = function()
+            return value
+        end
+    }
+end
+
+-- Dropdown
+function Tab:CreateDropdown(settings)
+    local selected = settings.Default or settings.Options[1] or ""
+    local opened = false
+    
+    local Dropdown = Create("Frame", {
+        Name = "Dropdown_" .. settings.Name,
+        Size = UDim2.new(1, 0, 0, 50),
+        BackgroundColor3 = Theme.Secondary,
+        ClipsDescendants = true,
+        Parent = self.Content
+    })
+    AddCorner(Dropdown)
+    AddStroke(Dropdown, Theme.Primary, 1)
+    
+    local DropdownText = Create("TextLabel", {
+        Size = UDim2.new(1, -100, 0, 20),
+        Position = UDim2.new(0, 15, 0, 8),
+        BackgroundTransparency = 1,
+        Text = settings.Name,
+        TextColor3 = Theme.Text,
+        TextSize = 13,
+        Font = Theme.Font,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Parent = Dropdown
+    })
+    
+    local DropdownSelected = Create("TextLabel", {
+        Size = UDim2.new(0, 100, 0, 20),
+        Position = UDim2.new(1, -115, 0, 15),
+        BackgroundTransparency = 1,
+        Text = selected,
+        TextColor3 = Theme.Primary,
+        TextSize = 12,
+        Font = Theme.Font,
+        TextXAlignment = Enum.TextXAlignment.Right,
+        Parent = Dropdown
+    })
+    
+    local DropdownArrow = Create("ImageLabel", {
+        Size = UDim2.new(0, 16, 0, 16),
+        Position = UDim2.new(1, -25, 0, 17),
+        BackgroundTransparency = 1,
+        Image = "rbxassetid://7072706796",
+        ImageColor3 = Theme.TextDark,
+        Rotation = 0,
+        Parent = Dropdown
+    })
+    
+    local OptionsContainer = Create("Frame", {
+        Name = "Options",
+        Size = UDim2.new(1, -20, 0, #settings.Options * 35),
+        Position = UDim2.new(0, 10, 0, 55),
+        BackgroundTransparency = 1,
+        Parent = Dropdown
+    })
+    
+    local OptionsLayout = Create("UIListLayout", {
+        Padding = UDim.new(0, 5),
+        Parent = OptionsContainer
+    })
+    
+    for _, option in ipairs(settings.Options) do
+        local OptionBtn = Create("TextButton", {
+            Name = option,
+            Size = UDim2.new(1, 0, 0, 30),
+            BackgroundColor3 = Theme.Background,
+            Text = option,
+            TextColor3 = Theme.Text,
+            TextSize = 12,
+            Font = Enum.Font.Gotham,
+            Parent = OptionsContainer
+        })
+        AddCorner(OptionBtn, UDim.new(0, 6))
+        
+        OptionBtn.MouseButton1Click:Connect(function()
+            selected = option
+            DropdownSelected.Text = option
+            
+            if settings.Callback then
+                settings.Callback(option)
+            end
+            
+            -- Close dropdown
+            opened = false
+            Tween(Dropdown, {Size = UDim2.new(1, 0, 0, 50)}, 0.3)
+            Tween(DropdownArrow, {Rotation = 0}, 0.3)
+            
+            self.Window:Notify("Selected", option .. " selected", "info")
+        end)
+        
+        OptionBtn.MouseEnter:Connect(function()
+            Tween(OptionBtn, {BackgroundColor3 = Theme.Primary}, 0.2)
+        end)
+        
+        OptionBtn.MouseLeave:Connect(function()
+            Tween(OptionBtn, {BackgroundColor3 = Theme.Background}, 0.2)
+        end)
+    end
+    
+    local DropdownBtn = Create("TextButton", {
+        Size = UDim2.new(1, 0, 0, 50),
+        BackgroundTransparency = 1,
+        Text = "",
+        Parent = Dropdown
+    })
+    
+    DropdownBtn.MouseButton1Click:Connect(function()
+        opened = not opened
+        
+        local targetSize = opened and UDim2.new(1, 0, 0, 60 + #settings.Options * 35) or UDim2.new(1, 0, 0, 50)
+        local targetRotation = opened and 180 or 0
+        
+        Tween(Dropdown, {Size = targetSize}, 0.3)
+        Tween(DropdownArrow, {Rotation = targetRotation}, 0.3)
+    end)
+    
+    return {
+        Set = function(option)
+            if table.find(settings.Options, option) then
+                selected = option
+                DropdownSelected.Text = option
+            end
+        end,
+        Get = function()
+            return selected
+        end,
+        Refresh = function(newOptions)
+            for _, child in ipairs(OptionsContainer:GetChildren()) do
+                if child:IsA("TextButton") then
+                    child:Destroy()
+                end
+            end
+            settings.Options = newOptions
+            -- Rebuild options...
+        end
+    }
+end
+
+return VillainsUI</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="section-docs" class="hidden pt-24 px-4 pb-10 min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold mb-2"><span class="text-red-500">Documentation</span></h2>
+                <p class="text-gray-400">Panduan lengkap menggunakan Villains UI Library</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Getting Started -->
+                <div class="ui-window rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">🚀 Getting Started</h3>
+                    <div class="code-block rounded-xl p-4 mb-4">
+                        <code class="text-green-400 text-sm">
+-- Load Library<br>
+local VillainsUI = loadstring(game:HttpGet("YOUR_RAW_URL"))()<br><br>
+
+-- Create Window<br>
+local Window = VillainsUI:CreateWindow({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Title = "Villains Hub",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Subtitle = "by VillainsTeam",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;LogoId = "rbxassetid://YOUR_LOGO_ID",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;KeySystem = true, -- Enable key system<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Keys = {"KEY123", "VIPKEY456"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;KeyLink = "https://gateway.platoboost.com/a/YOUR_ID",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;SaveKey = true<br>
+})
+                        </code>
+                    </div>
+                </div>
+
+                <!-- Create Tab -->
+                <div class="ui-window rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">📑 Create Tab</h3>
+                    <div class="code-block rounded-xl p-4">
+                        <code class="text-green-400 text-sm">
+local MainTab = Window:CreateTab({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Name = "Main",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Icon = "rbxassetid://7072717857"<br>
+})
+                        </code>
+                    </div>
+                </div>
+
+                <!-- Create Section -->
+                <div class="ui-window rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">📂 Create Section</h3>
+                    <div class="code-block rounded-xl p-4">
+                        <code class="text-green-400 text-sm">
+MainTab:CreateSection("Auto Farm")
+                        </code>
+                    </div>
+                </div>
+
+                <!-- Create Button -->
+                <div class="ui-window rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">🔘 Create Button</h3>
+                    <div class="code-block rounded-xl p-4">
+                        <code class="text-green-400 text-sm">
+MainTab:CreateButton({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Name = "Teleport to Spawn",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Description = "Teleport player ke spawn",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Callback = function()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Teleporting...")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end<br>
+})
+                        </code>
+                    </div>
+                </div>
+
+                <!-- Create Toggle -->
+                <div class="ui-window rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">🔄 Create Toggle</h3>
+                    <div class="code-block rounded-xl p-4">
+                        <code class="text-green-400 text-sm">
+local AutoFarm = MainTab:CreateToggle({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Name = "Auto Farm",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Description = "Aktifkan auto farming",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Default = false,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Callback = function(value)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Auto Farm:", value)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end<br>
+})<br><br>
+
+-- Set Toggle Value<br>
+AutoFarm.Set(true)<br><br>
+
+-- Get Toggle Value<br>
+local isEnabled = AutoFarm.Get()
+                        </code>
+                    </div>
+                </div>
+
+                <!-- Create Slider -->
+                <div class="ui-window rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">📊 Create Slider</h3>
+                    <div class="code-block rounded-xl p-4">
+                        <code class="text-green-400 text-sm">
+local SpeedSlider = MainTab:CreateSlider({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Name = "Walk Speed",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Min = 16,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Max = 500,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Default = 16,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Callback = function(value)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end<br>
+})<br><br>
+
+-- Set Slider Value<br>
+SpeedSlider.Set(100)<br><br>
+
+-- Get Slider Value<br>
+local speed = SpeedSlider.Get()
+                        </code>
+                    </div>
+                </div>
+
+                <!-- Create Dropdown -->
+                <div class="ui-window rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">📋 Create Dropdown</h3>
+                    <div class="code-block rounded-xl p-4">
+                        <code class="text-green-400 text-sm">
+local LocationDropdown = MainTab:CreateDropdown({<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Name = "Select Location",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Options = {"Spawn", "Shop", "Boss Arena", "Secret Area"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Default = "Spawn",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Callback = function(option)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Selected:", option)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end<br>
+})<br><br>
+
+-- Set Dropdown Value<br>
+LocationDropdown.Set("Shop")<br><br>
+
+-- Get Selected Value<br>
+local location = LocationDropdown.Get()
+                        </code>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="ui-window rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">🔔 Notifications</h3>
+                    <div class="code-block rounded-xl p-4">
+                        <code class="text-green-400 text-sm">
+-- Types: "success", "warning", "error", "info"<br><br>
+
+Window:Notify("Title", "Message content here", "success")<br>
+Window:Notify("Warning!", "Something happened", "warning")<br>
+Window:Notify("Error!", "Failed to execute", "error")<br>
+Window:Notify("Info", "Just informing you", "info")
+                        </code>
+                    </div>
+                </div>
+
+                <!-- Key System -->
+                <div class="ui-window rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">🔐 Key System Support</h3>
+                    <div class="code-block rounded-xl p-4">
+                        <code class="text-green-400 text-sm">
+-- Platoboost<br>
+KeyLink = "https://gateway.platoboost.com/a/YOUR_ID"<br><br>
+
+-- Work.ink<br>
+KeyLink = "https://work.ink/YOUR_LINK"<br><br>
+
+-- Linkvertise<br>
+KeyLink = "https://linkvertise.com/YOUR_ID/YOUR_LINK"<br><br>
+
+-- Multiple Keys Support<br>
+Keys = {"KEY1", "KEY2", "VIPKEY", "PREMIUM123"}
+                        </code>
+                    </div>
+                </div>
+
+                <!-- Window Controls -->
+                <div class="ui-window rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4">⚙️ Window Controls</h3>
+                    <div class="code-block rounded-xl p-4">
+                        <code class="text-green-400 text-sm">
+-- Minimize/Restore Window<br>
+Window:ToggleMinimize()<br><br>
+
+-- Destroy Window<br>
+Window:Destroy()
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-red-900/30 py-8 mt-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <span class="font-bold">Villains UI Library</span>
+            </div>
+            <p class="text-gray-500 text-sm">Made with ❤️ by VillainsTeam | v2.0</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Fire Particles
+        function createFireParticles() {
+            const fireContainer = document.getElementById('fire-particles');
+            if (!fireContainer) return;
+            
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'fire-particle';
+                const size = Math.random() * 15 + 8;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.background = `rgba(${200 + Math.random() * 55}, ${30 + Math.random() * 70}, 0, 0.8)`;
+                particle.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
+                particle.style.animationDelay = Math.random() * 0.5 + 's';
+                fireContainer.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 3000);
+            }, 80);
+        }
+        
+        createFireParticles();
+
+        // Section Navigation
+        function showSection(section) {
+            document.querySelectorAll('[id^="section-"]').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById('section-' + section).classList.remove('hidden');
+            document.getElementById('nav-' + section).classList.add('active');
+        }
+
+        // Key System
+        function openKeyLink(type) {
+            const links = {
+                platoboost: 'https://gateway.platoboost.com/a/EXAMPLE',
+                workink: 'https://work.ink/EXAMPLE',
+                linkvertise: 'https://linkvertise.com/EXAMPLE'
+            };
+            showNotification('Link Copied!', 'Key link copied to clipboard', 'info');
+        }
+
+        function skipKeySystem() {
+            document.getElementById('key-system').style.display = 'none';
+            showNotification('Demo Mode', 'Melihat UI tanpa key system', 'info');
+        }
+
+        function validateKey() {
+            const key = document.getElementById('key-input').value;
+            const validKeys = ['VILLAINS2024', 'VIPKEY123', 'DEMO'];
+            
+            if (validKeys.includes(key) || key.length > 3) {
+                showNotification('Success!', 'Key verified successfully', 'success');
+                document.getElementById('key-system').style.display = 'none';
+                document.getElementById('main-ui').classList.remove('hidden');
+            } else {
+                showNotification('Error!', 'Invalid key. Try: VILLAINS2024', 'error');
+                const input = document.getElementById('key-input');
+                input.style.animation = 'shake 0.5s';
+                setTimeout(() => input.style.animation = '', 500);
+            }
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('[id^="tab-"]').forEach(tab => {
+                tab.classList.remove('tab-active');
+                tab.querySelector('svg').classList.remove('text-red-500');
+                tab.querySelector('svg').classList.add('text-gray-400');
+                tab.querySelector('span').classList.remove('text-white');
+                tab.querySelector('span').classList.add('text-gray-400');
+            });
+            
+            const activeTab = document.getElementById('tab-' + tabName);
+            activeTab.classList.add('tab-active');
+            activeTab.querySelector('svg').classList.remove('text-gray-400');
+            activeTab.querySelector('svg').classList.add('text-red-500');
+            activeTab.querySelector('span').classList.remove('text-gray-400');
+            activeTab.querySelector('span').classList.add('text-white');
+            
+            // Update content
+            document.querySelectorAll('[id^="content-"]').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+        }
+
+        // Toggle Switch
+        function toggleSwitch(element) {
+            const track = element;
+            const thumb = track.querySelector('.toggle-thumb');
+            const isActive = track.classList.contains('active');
+            
+            if (isActive) {
+                track.classList.remove('active');
+                thumb.style.left = '2px';
+            } else {
+                track.classList.add('active');
+                thumb.style.left = '24px';
+            }
+            
+            showNotification(
+                isActive ? 'Disabled' : 'Enabled',
+                'Feature has been ' + (isActive ? 'disabled' : 'enabled'),
+                isActive ? 'warning' : 'success'
+            );
+        }
+
+        // Slider
+        let activeSlider = null;
+
+        function startSlider(event, container) {
+            event.preventDefault();
+            activeSlider = container;
+            updateSlider(event);
+            
+            document.addEventListener('mousemove', handleSliderMove);
+            document.addEventListener('mouseup', stopSlider);
+            document.addEventListener('touchmove', handleSliderMove);
+            document.addEventListener('touchend', stopSlider);
+        }
+
+        function handleSliderMove(event) {
+            if (activeSlider) {
+                updateSlider(event);
+            }
+        }
+
+        function stopSlider() {
+            activeSlider = null;
+            document.removeEventListener('mousemove', handleSliderMove);
+            document.removeEventListener('mouseup', stopSlider);
+            document.removeEventListener('touchmove', handleSliderMove);
+            document.removeEventListener('touchend', stopSlider);
+        }
+
+        function updateSlider(event) {
+            if (!activeSlider) return;
+            
+            const rect = activeSlider.getBoundingClientRect();
+            const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+            let pos = (clientX - rect.left) / rect.width;
+            pos = Math.max(0, Math.min(1, pos));
+            
+            const fill = activeSlider.querySelector('.slider-fill');
+            const thumb = activeSlider.querySelector('.slider-thumb');
+            const valueDisplay = activeSlider.closest('.btn-villains').querySelector('.slider-value');
+            
+            fill.style.width = (pos * 100) + '%';
+            thumb.style.left = `calc(${pos * 100}% - 8px)`;
+            
+            const value = Math.round(pos * 100);
+            valueDisplay.textContent = value;
+        }
+
+        // Dropdown
+        function toggleDropdown(element) {
+            const menu = element.querySelector('.dropdown-menu');
+            const arrow = element.querySelector('.dropdown-arrow');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                menu.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function selectDropdown(item, value) {
+            const dropdown = item.closest('.btn-villains');
+            const selected = dropdown.querySelector('.dropdown-selected');
+            const menu = dropdown.querySelector('.dropdown-menu');
+            const arrow = dropdown.querySelector('.dropdown-arrow');
+            
+            selected.textContent = value;
+            menu.classList.add('hidden');
+            arrow.style.transform = 'rotate(0deg)';
+            
+            showNotification('Selected', value + ' has been selected', 'info');
+        }
+
+        // Button Click
+        function handleButtonClick(message) {
+            showNotification('Executed', message, 'success');
+        }
+
+        // Notifications
+        function showNotification(title, message, type = 'info') {
+            const container = document.getElementById('notification-container');
+            const colors = {
+                success: 'border-green-500',
+                warning: 'border-yellow-500',
+                error: 'border-red-500',
+                info: 'border-red-600'
+            };
+            const textColors = {
+                success: 'text-green-400',
+                warning: 'text-yellow-400',
+                error: 'text-red-400',
+                info: 'text-red-400'
+            };
+            
+            const notif = document.createElement('div');
+            notif.className = `notification rounded-xl p-4 border-l-4 ${colors[type]} min-w-[280px]`;
+            notif.innerHTML = `
+                <h4 class="font-semibold ${textColors[type]}">${title}</h4>
+                <p class="text-sm text-gray-400">${message}</p>
+            `;
+            
+            container.appendChild(notif);
+            
+            setTimeout(() => notif.remove(), 3000);
+        }
+
+        // Minimize
+        function toggleMinimize() {
+            const window = document.getElementById('ui-window');
+            const logo = document.getElementById('minimized-logo');
+            
+            if (window.style.display !== 'none') {
+                window.style.transform = 'scale(0)';
+                setTimeout(() => {
+                    window.style.display = 'none';
+                    logo.classList.remove('hidden');
+                }, 300);
+            } else {
+                logo.classList.add('hidden');
+                window.style.display = 'block';
+                setTimeout(() => {
+                    window.style.transform = 'scale(1)';
+                }, 10);
+            }
+        }
+
+        // Close UI
+        function closeUI() {
+            const window = document.getElementById('ui-window');
+            window.style.transform = 'scale(0)';
+            setTimeout(() => {
+                window.style.display = 'none';
+                showNotification('UI Closed', 'Window has been closed', 'warning');
+            }, 300);
+        }
+
+        // Fire Animation Toggle
+        function toggleFireAnimation(element) {
+            toggleSwitch(element);
+            const fireContainer = document.getElementById('fire-bg');
+            fireContainer.style.display = fireContainer.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Draggable
+        let isDragging = false;
+        let currentX, currentY, initialX, initialY;
+
+        const titleBar = document.getElementById('title-bar');
+        const uiWindow = document.getElementById('ui-window');
+
+        if (titleBar && uiWindow) {
+            titleBar.addEventListener('mousedown', dragStart);
+            titleBar.addEventListener('touchstart', dragStart);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchend', dragEnd);
+        }
+
+        function dragStart(e) {
+            if (e.type === 'touchstart') {
+                initialX = e.touches[0].clientX - (uiWindow.offsetLeft || 0);
+                initialY = e.touches[0].clientY - (uiWindow.offsetTop || 0);
+            } else {
+                initialX = e.clientX - (uiWindow.offsetLeft || 0);
+                initialY = e.clientY - (uiWindow.offsetTop || 0);
+            }
+            isDragging = true;
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            if (e.type === 'touchmove') {
+                currentX = e.touches[0].clientX - initialX;
+                currentY = e.touches[0].clientY - initialY;
+            } else {
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+            }
+            
+            uiWindow.style.position = 'fixed';
+            uiWindow.style.left = currentX + 'px';
+            uiWindow.style.top = currentY + 'px';
+            uiWindow.style.transform = 'none';
+        }
+
+        function dragEnd() {
+            isDragging = false;
+        }
+
+        // Copy Code
+        function copyCode() {
+            const code = document.getElementById('lua-code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                showNotification('Copied!', 'Lua code copied to clipboard', 'success');
+            });
+        }
+
+        // Init UI with transition
+        document.addEventListener('DOMContentLoaded', () => {
+            const uiWindow = document.getElementById('ui-window');
+            if (uiWindow) {
+                uiWindow.style.transition = 'transform 0.3s ease';
+            }
+        });
+    </script>
+</body>
+</html>
