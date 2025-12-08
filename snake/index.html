@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Classic Snake Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: none;
+            box-sizing: border-box;
+        }
+        html, body {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(74, 222, 128, 0.25);
+            border: 2px solid rgba(74, 222, 128, 0.5);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            transition: background 0.1s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .control-btn:active {
+            background: rgba(74, 222, 128, 0.6);
+            transform: scale(0.95);
+        }
+        @media (min-width: 1024px) {
+            .mobile-controls {
+                display: none !important;
+            }
+        }
+        .difficulty-btn {
+            transition: all 0.2s;
+        }
+        .difficulty-btn:hover {
+            transform: scale(1.05);
+        }
+        .difficulty-btn.selected {
+            transform: scale(1.05);
+        }
+        .leaderboard-scroll {
+            overflow-y: auto;
+        }
+        .leaderboard-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .leaderboard-scroll::-webkit-scrollbar-track {
+            background: #1f2937;
+            border-radius: 3px;
+        }
+        .leaderboard-scroll::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 3px;
+        }
+        input[type="text"] {
+            user-select: text;
+            -webkit-user-select: text;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .live-badge {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 flex flex-col h-screen w-screen overflow-hidden">
+    <!-- Header -->
+    <div class="w-full px-4 py-2 flex-shrink-0 bg-gray-800/50 border-b border-gray-700">
+        <div class="flex items-center justify-between max-w-7xl mx-auto">
+            <h1 class="text-xl md:text-2xl font-bold text-green-400">🐍 Snake Game</h1>
+            <div class="flex items-center gap-2 md:gap-4 text-white">
+                <div id="difficultyBadge" class="bg-green-600/80 px-2 py-1 rounded-lg text-xs font-bold hidden">🌱 EASY</div>
+                <div class="bg-gray-800/80 px-3 py-1 rounded-lg flex items-center gap-1">
+                    <span class="text-gray-400 text-xs">Score</span>
+                    <span id="score" class="text-xl font-bold text-green-400">0</span>
+                </div>
+                <div class="bg-gray-800/80 px-3 py-1 rounded-lg flex items-center gap-1">
+                    <span class="text-gray-400 text-xs">Best</span>
+                    <span id="highScore" class="text-xl font-bold text-yellow-400">0</span>
+                </div>
+                <button id="menuBtn" class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-lg text-sm font-bold hidden transition-all">
+                    ☰ Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+        <!-- Game Area -->
+        <div class="flex-1 flex flex-col items-center justify-center p-2 lg:p-4 relative" id="gameArea">
+            <div class="relative" id="gameContainer">
+                <canvas id="gameCanvas" class="rounded-xl shadow-2xl border-4 border-gray-700/50"></canvas>
+                
+                <!-- Start Screen with Difficulty Selection -->
+                <div id="startScreen" class="absolute inset-0 bg-black/95 flex flex-col items-center justify-center rounded-xl fade-in z-10">
+                    <h2 class="text-3xl md:text-5xl font-bold text-green-400 mb-2">🐍 Snake</h2>
+                    <p class="text-gray-400 mb-6 text-base">Select Difficulty & Start!</p>
+                    
+                    <!-- Difficulty Selection -->
+                    <div class="flex gap-2 md:gap-3 mb-6">
+                        <button id="easyBtn" class="difficulty-btn bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 md:py-3 md:px-6 rounded-xl text-sm md:text-lg selected ring-4 ring-green-400">
+                            🌱 Easy
+                        </button>
+                        <button id="mediumBtn" class="difficulty-btn bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 md:py-3 md:px-6 rounded-xl text-sm md:text-lg">
+                            ⚡ Medium
+                        </button>
+                        <button id="hardBtn" class="difficulty-btn bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 md:py-3 md:px-6 rounded-xl text-sm md:text-lg">
+                            🔥 Hard
+                        </button>
+                    </div>
+                    
+                    <button id="startBtn" class="bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-bold py-3 px-12 rounded-xl text-xl transition-all shadow-lg shadow-green-500/30">
+                        ▶ START GAME
+                    </button>
+                    
+                    <p class="text-gray-500 text-sm mt-6 hidden md:block">
+                        Use <kbd class="bg-gray-700 px-2 py-0.5 rounded">↑↓←→</kbd> or <kbd class="bg-gray-700 px-2 py-0.5 rounded">WASD</kbd> to move
+                    </p>
+                </div>
+
+                <!-- Game Over Screen -->
+                <div id="gameOverScreen" class="absolute inset-0 bg-black/95 hidden flex-col items-center justify-center rounded-xl z-10">
+                    <h2 class="text-3xl md:text-4xl font-bold text-red-500 mb-4">💀 Game Over!</h2>
+                    <p class="text-2xl text-white mb-2">Score: <span id="finalScore" class="text-green-400 font-bold">0</span></p>
+                    <p class="text-base text-gray-400 mb-2" id="difficultyText">Difficulty: Easy</p>
+                    <p class="text-lg mb-4" id="newHighScore"></p>
+                    
+                    <!-- Name Input -->
+                    <div class="bg-gray-800 rounded-xl p-4 mb-4 w-72">
+                        <label class="text-gray-300 text-sm mb-2 block">Enter your name:</label>
+                        <input type="text" id="playerName" maxlength="12" placeholder="Your name" 
+                            class="w-full bg-gray-700 text-white px-4 py-2 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-green-400">
+                    </div>
+                    
+                    <div class="flex flex-col gap-2 w-72">
+                        <button id="saveScoreBtn" class="bg-yellow-500 hover:bg-yellow-600 active:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-all w-full">
+                            💾 Save to Leaderboard
+                        </button>
+                        <div class="flex gap-2">
+                            <button id="restartBtn" class="flex-1 bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-bold py-3 px-4 rounded-lg text-base transition-all">
+                                🔄 Play Again
+                            </button>
+                            <button id="backToMenuBtn" class="flex-1 bg-gray-600 hover:bg-gray-500 active:bg-gray-400 text-white font-bold py-3 px-4 rounded-lg text-base transition-all">
+                                ☰ Menu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pause Overlay -->
+                <div id="pauseScreen" class="absolute inset-0 bg-black/70 hidden flex-col items-center justify-center rounded-xl z-10">
+                    <h2 class="text-4xl font-bold text-yellow-400">⏸ PAUSED</h2>
+                    <p class="text-gray-300 mt-2">Tap or press P to continue</p>
+                    <button id="resumeBtn" class="mt-4 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-lg">
+                        ▶ Resume
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Controls -->
+            <div class="mobile-controls mt-2 flex-shrink-0 lg:hidden">
+                <div class="flex flex-col items-center gap-1">
+                    <button id="btnUp" class="control-btn">▲</button>
+                    <div class="flex gap-1">
+                        <button id="btnLeft" class="control-btn">◀</button>
+                        <button id="btnDown" class="control-btn">▼</button>
+                        <button id="btnRight" class="control-btn">▶</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Sidebar (Desktop) -->
+        <div class="hidden lg:flex flex-col w-80 bg-gray-800/50 border-l border-gray-700 p-4">
+            <div class="flex items-center justify-between mb-3">
+                <h3 class="text-xl font-bold text-yellow-400">🏆 Leaderboard</h3>
+                <span class="live-badge bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">LIVE</span>
+            </div>
+            
+            <!-- Leaderboard Tabs -->
+            <div class="flex gap-1 mb-3">
+                <button id="tabAll" class="flex-1 py-1.5 px-2 rounded text-sm font-bold bg-gray-700 text-white">All</button>
+                <button id="tabEasy" class="flex-1 py-1.5 px-2 rounded text-sm font-bold bg-gray-600 text-gray-300 hover:bg-gray-500">🌱</button>
+                <button id="tabMedium" class="flex-1 py-1.5 px-2 rounded text-sm font-bold bg-gray-600 text-gray-300 hover:bg-gray-500">⚡</button>
+                <button id="tabHard" class="flex-1 py-1.5 px-2 rounded text-sm font-bold bg-gray-600 text-gray-300 hover:bg-gray-500">🔥</button>
+            </div>
+            
+            <div id="leaderboardList" class="leaderboard-scroll flex-1 space-y-2 pr-1">
+                <p class="text-gray-500 text-center py-8">No scores yet.<br>Be the first!</p>
+            </div>
+            
+            <!-- Controls Info -->
+            <div class="mt-4 pt-4 border-t border-gray-700">
+                <p class="text-gray-500 text-xs text-center">
+                    <kbd class="bg-gray-700 px-1.5 py-0.5 rounded">↑↓←→</kbd> Move | 
+                    <kbd class="bg-gray-700 px-1.5 py-0.5 rounded">P</kbd> Pause
+                </p>
+            </div>
+        </div>
+
+        <!-- Mobile Leaderboard (shown in modal on mobile) -->
+        <div id="mobileLeaderboard" class="lg:hidden hidden fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+            <div class="bg-gray-800 rounded-2xl p-4 w-full max-w-sm max-h-[80vh] flex flex-col">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xl font-bold text-yellow-400">🏆 Leaderboard</h3>
+                    <button id="closeMobileLeaderboard" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+                </div>
+                
+                <div class="flex gap-1 mb-3">
+                    <button id="mTabAll" class="flex-1 py-1.5 px-2 rounded text-sm font-bold bg-gray-700 text-white">All</button>
+                    <button id="mTabEasy" class="flex-1 py-1.5 px-2 rounded text-sm font-bold bg-gray-600 text-gray-300">🌱</button>
+                    <button id="mTabMedium" class="flex-1 py-1.5 px-2 rounded text-sm font-bold bg-gray-600 text-gray-300">⚡</button>
+                    <button id="mTabHard" class="flex-1 py-1.5 px-2 rounded text-sm font-bold bg-gray-600 text-gray-300">🔥</button>
+                </div>
+                
+                <div id="mobileLeaderboardList" class="leaderboard-scroll flex-1 space-y-2 overflow-y-auto max-h-[50vh]">
+                    <p class="text-gray-500 text-center py-8">No scores yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Bar -->
+    <div class="lg:hidden flex-shrink-0 bg-gray-800/50 border-t border-gray-700 px-4 py-2">
+        <div class="flex items-center justify-center gap-4">
+            <button id="showLeaderboardBtn" class="bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg text-sm">
+                🏆 Leaderboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d', { alpha: false });
+        const gameContainer = document.getElementById('gameContainer');
+        const gameArea = document.getElementById('gameArea');
+        
+        // Difficulty settings
+        const DIFFICULTIES = {
+            easy: { name: 'Easy', speed: 150, speedIncrease: 5, minSpeed: 80, color: 'bg-green-600', emoji: '🌱' },
+            medium: { name: 'Medium', speed: 100, speedIncrease: 8, minSpeed: 50, color: 'bg-yellow-600', emoji: '⚡' },
+            hard: { name: 'Hard', speed: 70, speedIncrease: 10, minSpeed: 30, color: 'bg-red-600', emoji: '🔥' }
+        };
+        let currentDifficulty = 'easy';
+        
+        // Leaderboard
+        let leaderboard = JSON.parse(localStorage.getItem('snakeLeaderboard')) || [];
+        let currentLeaderboardFilter = 'all';
+        
+        // Responsive canvas sizing
+        function resizeCanvas() {
+            const isMobile = window.innerWidth < 1024;
+            const headerHeight = 50;
+            const mobileControlsHeight = isMobile ? 150 : 0;
+            const mobileBottomBar = isMobile ? 50 : 0;
+            const sidebarWidth = isMobile ? 0 : 320;
+            const padding = 16;
+            
+            const availableWidth = window.innerWidth - sidebarWidth - padding * 2;
+            const availableHeight = window.innerHeight - headerHeight - mobileControlsHeight - mobileBottomBar - padding * 2;
+            
+            const maxSize = Math.min(availableWidth, availableHeight, 600);
+            const gridSize = isMobile ? 20 : 25;
+            const size = Math.floor(maxSize / gridSize) * gridSize;
+            
+            canvas.width = size;
+            canvas.height = size;
+            return { size, gridSize };
+        }
+        
+        let { size: canvasSize, gridSize } = resizeCanvas();
+        let tileCount = canvasSize / gridSize;
+
+        // Pre-calculate colors
+        const snakeColors = [];
+        for (let i = 0; i < 100; i++) {
+            const hue = Math.max(100, 120 - i * 0.5);
+            const sat = Math.max(40, 70 - i);
+            const light = Math.max(30, 50 - i * 0.5);
+            snakeColors.push(`hsl(${hue}, ${sat}%, ${light}%)`);
+        }
+
+        // Game state
+        let snake = [];
+        let food = { x: 0, y: 0 };
+        let direction = { x: 1, y: 0 };
+        let nextDirection = { x: 1, y: 0 };
+        let score = 0;
+        let highScore = parseInt(localStorage.getItem('snakeHighScore')) || 0;
+        let gameSpeed = 150;
+        let isGameRunning = false;
+        let isPaused = false;
+        let scoreSaved = false;
+
+        // Smooth movement
+        let lastUpdateTime = 0;
+        let accumulator = 0;
+        let animationId = null;
+
+        // Interpolation
+        let snakePositions = [];
+        let snakeTargets = [];
+
+        // DOM elements
+        const scoreEl = document.getElementById('score');
+        const highScoreEl = document.getElementById('highScore');
+        const difficultyBadge = document.getElementById('difficultyBadge');
+        const menuBtn = document.getElementById('menuBtn');
+        const startScreen = document.getElementById('startScreen');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const pauseScreen = document.getElementById('pauseScreen');
+        const finalScoreEl = document.getElementById('finalScore');
+        const newHighScoreEl = document.getElementById('newHighScore');
+        const difficultyText = document.getElementById('difficultyText');
+        const startBtn = document.getElementById('startBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const backToMenuBtn = document.getElementById('backToMenuBtn');
+        const resumeBtn = document.getElementById('resumeBtn');
+        const saveScoreBtn = document.getElementById('saveScoreBtn');
+        const playerNameInput = document.getElementById('playerName');
+        const leaderboardList = document.getElementById('leaderboardList');
+        const mobileLeaderboardList = document.getElementById('mobileLeaderboardList');
+        const mobileLeaderboard = document.getElementById('mobileLeaderboard');
+        const showLeaderboardBtn = document.getElementById('showLeaderboardBtn');
+        const closeMobileLeaderboard = document.getElementById('closeMobileLeaderboard');
+
+        // Difficulty buttons
+        const easyBtn = document.getElementById('easyBtn');
+        const mediumBtn = document.getElementById('mediumBtn');
+        const hardBtn = document.getElementById('hardBtn');
+
+        // Leaderboard tabs
+        const tabAll = document.getElementById('tabAll');
+        const tabEasy = document.getElementById('tabEasy');
+        const tabMedium = document.getElementById('tabMedium');
+        const tabHard = document.getElementById('tabHard');
+        
+        // Mobile tabs
+        const mTabAll = document.getElementById('mTabAll');
+        const mTabEasy = document.getElementById('mTabEasy');
+        const mTabMedium = document.getElementById('mTabMedium');
+        const mTabHard = document.getElementById('mTabHard');
+
+        // Mobile controls
+        const btnUp = document.getElementById('btnUp');
+        const btnDown = document.getElementById('btnDown');
+        const btnLeft = document.getElementById('btnLeft');
+        const btnRight = document.getElementById('btnRight');
+
+        highScoreEl.textContent = highScore;
+
+        // Difficulty selection
+        function selectDifficulty(difficulty) {
+            currentDifficulty = difficulty;
+            
+            [easyBtn, mediumBtn, hardBtn].forEach(btn => {
+                btn.classList.remove('selected', 'ring-4', 'ring-green-400', 'ring-yellow-400', 'ring-red-400');
+            });
+            
+            const colors = { easy: 'ring-green-400', medium: 'ring-yellow-400', hard: 'ring-red-400' };
+            const btn = { easy: easyBtn, medium: mediumBtn, hard: hardBtn }[difficulty];
+            btn.classList.add('selected', 'ring-4', colors[difficulty]);
+        }
+
+        easyBtn.addEventListener('click', () => selectDifficulty('easy'));
+        mediumBtn.addEventListener('click', () => selectDifficulty('medium'));
+        hardBtn.addEventListener('click', () => selectDifficulty('hard'));
+
+        // Leaderboard functions
+        function saveLeaderboard() {
+            localStorage.setItem('snakeLeaderboard', JSON.stringify(leaderboard));
+        }
+
+        function addToLeaderboard(name, score, difficulty) {
+            const entry = {
+                name: name.trim() || 'Anonymous',
+                score: score,
+                difficulty: difficulty,
+                date: new Date().toLocaleDateString()
+            };
+            leaderboard.push(entry);
+            leaderboard.sort((a, b) => b.score - a.score);
+            leaderboard = leaderboard.slice(0, 50);
+            saveLeaderboard();
+            renderLeaderboard(currentLeaderboardFilter);
+        }
+
+        function renderLeaderboard(filter = 'all') {
+            currentLeaderboardFilter = filter;
+            
+            // Update desktop tabs
+            [tabAll, tabEasy, tabMedium, tabHard].forEach(tab => {
+                tab.classList.remove('bg-gray-700', 'text-white');
+                tab.classList.add('bg-gray-600', 'text-gray-300');
+            });
+            
+            const activeTab = { all: tabAll, easy: tabEasy, medium: tabMedium, hard: tabHard }[filter];
+            activeTab.classList.remove('bg-gray-600', 'text-gray-300');
+            activeTab.classList.add('bg-gray-700', 'text-white');
+            
+            // Update mobile tabs
+            [mTabAll, mTabEasy, mTabMedium, mTabHard].forEach(tab => {
+                tab.classList.remove('bg-gray-700', 'text-white');
+                tab.classList.add('bg-gray-600', 'text-gray-300');
+            });
+            
+            const mActiveTab = { all: mTabAll, easy: mTabEasy, medium: mTabMedium, hard: mTabHard }[filter];
+            mActiveTab.classList.remove('bg-gray-600', 'text-gray-300');
+            mActiveTab.classList.add('bg-gray-700', 'text-white');
+            
+            // Filter entries
+            let filtered = leaderboard;
+            if (filter !== 'all') {
+                filtered = leaderboard.filter(e => e.difficulty === filter);
+            }
+            
+            const html = generateLeaderboardHTML(filtered);
+            leaderboardList.innerHTML = html;
+            mobileLeaderboardList.innerHTML = html;
+        }
+        
+        function generateLeaderboardHTML(filtered) {
+            if (filtered.length === 0) {
+                return '<p class="text-gray-500 text-center py-8">No scores yet.<br>Be the first!</p>';
+            }
+            
+            const diffColors = {
+                easy: 'text-green-400',
+                medium: 'text-yellow-400',
+                hard: 'text-red-400'
+            };
+            
+            return filtered.slice(0, 15).map((entry, index) => {
+                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `<span class="text-gray-500 text-sm">${index + 1}</span>`;
+                const diffEmoji = DIFFICULTIES[entry.difficulty]?.emoji || '';
+                const isTop3 = index < 3;
+                const bgClass = isTop3 ? 'bg-gray-700/80' : 'bg-gray-700/40';
+                
+                return `
+                    <div class="flex items-center justify-between ${bgClass} px-3 py-2 rounded-lg">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg w-7 text-center">${medal}</span>
+                            <span class="text-white font-medium truncate max-w-20">${entry.name}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="${diffColors[entry.difficulty]} text-sm">${diffEmoji}</span>
+                            <span class="text-green-400 font-bold text-lg">${entry.score}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Tab event listeners
+        tabAll.addEventListener('click', () => renderLeaderboard('all'));
+        tabEasy.addEventListener('click', () => renderLeaderboard('easy'));
+        tabMedium.addEventListener('click', () => renderLeaderboard('medium'));
+        tabHard.addEventListener('click', () => renderLeaderboard('hard'));
+        
+        mTabAll.addEventListener('click', () => renderLeaderboard('all'));
+        mTabEasy.addEventListener('click', () => renderLeaderboard('easy'));
+        mTabMedium.addEventListener('click', () => renderLeaderboard('medium'));
+        mTabHard.addEventListener('click', () => renderLeaderboard('hard'));
+        
+        // Mobile leaderboard modal
+        showLeaderboardBtn.addEventListener('click', () => {
+            mobileLeaderboard.classList.remove('hidden');
+            renderLeaderboard(currentLeaderboardFilter);
+        });
+        
+        closeMobileLeaderboard.addEventListener('click', () => {
+            mobileLeaderboard.classList.add('hidden');
+        });
+        
+        mobileLeaderboard.addEventListener('click', (e) => {
+            if (e.target === mobileLeaderboard) {
+                mobileLeaderboard.classList.add('hidden');
+            }
+        });
+
+        // Initialize game
+        function initGame() {
+            const result = resizeCanvas();
+            canvasSize = result.size;
+            gridSize = result.gridSize;
+            tileCount = canvasSize / gridSize;
+            
+            snake = [
+                { x: 5, y: Math.floor(tileCount / 2) },
+                { x: 4, y: Math.floor(tileCount / 2) },
+                { x: 3, y: Math.floor(tileCount / 2) }
+            ];
+            
+            snakePositions = snake.map(s => ({ x: s.x * gridSize, y: s.y * gridSize }));
+            snakeTargets = snake.map(s => ({ x: s.x * gridSize, y: s.y * gridSize }));
+            
+            direction = { x: 1, y: 0 };
+            nextDirection = { x: 1, y: 0 };
+            score = 0;
+            
+            const diff = DIFFICULTIES[currentDifficulty];
+            gameSpeed = diff.speed;
+            
+            scoreEl.textContent = score;
+            scoreSaved = false;
+            spawnFood();
+        }
+
+        // Spawn food
+        function spawnFood() {
+            let validPosition = false;
+            let attempts = 0;
+            while (!validPosition && attempts < 100) {
+                food.x = Math.floor(Math.random() * tileCount);
+                food.y = Math.floor(Math.random() * tileCount);
+                validPosition = !snake.some(s => s.x === food.x && s.y === food.y);
+                attempts++;
+            }
+        }
+
+        // Update game
+        function updateGame() {
+            direction = { ...nextDirection };
+
+            const head = { 
+                x: snake[0].x + direction.x, 
+                y: snake[0].y + direction.y 
+            };
+
+            if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+                gameOver();
+                return;
+            }
+
+            if (snake.some(s => s.x === head.x && s.y === head.y)) {
+                gameOver();
+                return;
+            }
+
+            snake.unshift(head);
+            snakeTargets = snake.map(s => ({ x: s.x * gridSize, y: s.y * gridSize }));
+
+            if (head.x === food.x && head.y === food.y) {
+                score += 10;
+                scoreEl.textContent = score;
+                spawnFood();
+                
+                const lastPos = snakePositions[snakePositions.length - 1];
+                snakePositions.push({ ...lastPos });
+
+                const diff = DIFFICULTIES[currentDifficulty];
+                if (score % 50 === 0 && gameSpeed > diff.minSpeed) {
+                    gameSpeed -= diff.speedIncrease;
+                }
+            } else {
+                snake.pop();
+                snakeTargets.pop();
+            }
+        }
+
+        function lerp(start, end, t) {
+            return start + (end - start) * t;
+        }
+
+        // Game loop
+        function gameLoop(currentTime) {
+            if (!isGameRunning) return;
+            
+            animationId = requestAnimationFrame(gameLoop);
+            
+            if (isPaused) {
+                render(1);
+                return;
+            }
+
+            const deltaTime = currentTime - lastUpdateTime;
+            lastUpdateTime = currentTime;
+
+            accumulator += deltaTime;
+
+            while (accumulator >= gameSpeed) {
+                updateGame();
+                if (!isGameRunning) return;
+                accumulator -= gameSpeed;
+            }
+
+            for (let i = 0; i < snake.length; i++) {
+                if (snakePositions[i] && snakeTargets[i]) {
+                    snakePositions[i].x = lerp(snakePositions[i].x, snakeTargets[i].x, 0.3);
+                    snakePositions[i].y = lerp(snakePositions[i].y, snakeTargets[i].y, 0.3);
+                } else if (snakeTargets[i]) {
+                    snakePositions[i] = { ...snakeTargets[i] };
+                }
+            }
+
+            render(accumulator / gameSpeed);
+        }
+
+        // Render
+        function render(alpha) {
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+            ctx.strokeStyle = '#252540';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            for (let i = 0; i <= tileCount; i++) {
+                const pos = i * gridSize;
+                ctx.moveTo(pos, 0);
+                ctx.lineTo(pos, canvasSize);
+                ctx.moveTo(0, pos);
+                ctx.lineTo(canvasSize, pos);
+            }
+            ctx.stroke();
+
+            ctx.shadowBlur = 0;
+            
+            for (let i = snake.length - 1; i >= 0; i--) {
+                const pos = snakePositions[i];
+                if (!pos) continue;
+
+                const x = pos.x;
+                const y = pos.y;
+
+                if (i === 0) {
+                    ctx.shadowColor = '#4ade80';
+                    ctx.shadowBlur = 8;
+                    ctx.fillStyle = '#4ade80';
+                } else {
+                    ctx.shadowBlur = 0;
+                    ctx.fillStyle = snakeColors[Math.min(i, snakeColors.length - 1)];
+                }
+
+                const padding = 1;
+                const size = gridSize - padding * 2;
+                const radius = Math.max(3, gridSize * 0.15);
+                
+                ctx.beginPath();
+                ctx.roundRect(x + padding, y + padding, size, size, radius);
+                ctx.fill();
+
+                if (i === 0) {
+                    ctx.shadowBlur = 0;
+                    ctx.fillStyle = 'white';
+                    const eyeSize = gridSize * 0.12;
+                    const eyeOffset = gridSize * 0.25;
+                    
+                    let eye1x, eye1y, eye2x, eye2y;
+                    
+                    if (direction.x === 1) {
+                        eye1x = x + gridSize - eyeOffset; eye1y = y + eyeOffset;
+                        eye2x = x + gridSize - eyeOffset; eye2y = y + gridSize - eyeOffset;
+                    } else if (direction.x === -1) {
+                        eye1x = x + eyeOffset; eye1y = y + eyeOffset;
+                        eye2x = x + eyeOffset; eye2y = y + gridSize - eyeOffset;
+                    } else if (direction.y === 1) {
+                        eye1x = x + eyeOffset; eye1y = y + gridSize - eyeOffset;
+                        eye2x = x + gridSize - eyeOffset; eye2y = y + gridSize - eyeOffset;
+                    } else {
+                        eye1x = x + eyeOffset; eye1y = y + eyeOffset;
+                        eye2x = x + gridSize - eyeOffset; eye2y = y + eyeOffset;
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(eye1x, eye1y, eyeSize, 0, 6.28);
+                    ctx.arc(eye2x, eye2y, eyeSize, 0, 6.28);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#1a1a2e';
+                    const pupilSize = gridSize * 0.06;
+                    ctx.beginPath();
+                    ctx.arc(eye1x + direction.x * 2, eye1y + direction.y * 2, pupilSize, 0, 6.28);
+                    ctx.arc(eye2x + direction.x * 2, eye2y + direction.y * 2, pupilSize, 0, 6.28);
+                    ctx.fill();
+                }
+            }
+
+            const pulse = Math.sin(performance.now() * 0.008) * 0.15 + 0.85;
+            const foodX = food.x * gridSize + gridSize / 2;
+            const foodY = food.y * gridSize + gridSize / 2;
+            
+            ctx.shadowColor = '#ef4444';
+            ctx.shadowBlur = 12 * pulse;
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.arc(foodX, foodY, (gridSize / 2 - 2) * pulse, 0, 6.28);
+            ctx.fill();
+            
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = 'rgba(255,255,255,0.4)';
+            ctx.beginPath();
+            ctx.arc(foodX - 3, foodY - 3, 2.5, 0, 6.28);
+            ctx.fill();
+        }
+
+        // Start game
+        function startGame() {
+            initGame();
+            startScreen.classList.add('hidden');
+            startScreen.style.display = 'none';
+            gameOverScreen.classList.add('hidden');
+            gameOverScreen.style.display = 'none';
+            pauseScreen.classList.add('hidden');
+            pauseScreen.style.display = 'none';
+            
+            const diff = DIFFICULTIES[currentDifficulty];
+            difficultyBadge.textContent = diff.emoji + ' ' + diff.name.toUpperCase();
+            difficultyBadge.className = `${diff.color} px-2 py-1 rounded-lg text-xs font-bold`;
+            
+            menuBtn.classList.remove('hidden');
+            
+            isGameRunning = true;
+            isPaused = false;
+            lastUpdateTime = performance.now();
+            accumulator = 0;
+            
+            if (animationId) cancelAnimationFrame(animationId);
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // Game over
+        function gameOver() {
+            isGameRunning = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            
+            finalScoreEl.textContent = score;
+            const diff = DIFFICULTIES[currentDifficulty];
+            difficultyText.textContent = `${diff.emoji} ${diff.name}`;
+            
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('snakeHighScore', highScore);
+                highScoreEl.textContent = highScore;
+                newHighScoreEl.textContent = '🎉 New High Score!';
+                newHighScoreEl.className = 'text-lg text-yellow-400 mb-4';
+            } else {
+                newHighScoreEl.textContent = '';
+                newHighScoreEl.className = 'hidden';
+            }
+            
+            saveScoreBtn.disabled = false;
+            saveScoreBtn.textContent = '💾 Save to Leaderboard';
+            saveScoreBtn.className = 'bg-yellow-500 hover:bg-yellow-600 active:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-all w-full';
+            
+            playerNameInput.value = localStorage.getItem('snakePlayerName') || '';
+            
+            gameOverScreen.style.display = 'flex';
+            gameOverScreen.classList.remove('hidden');
+            gameOverScreen.classList.add('fade-in');
+            
+            setTimeout(() => playerNameInput.focus(), 100);
+        }
+
+        // Save score
+        function saveScore() {
+            if (scoreSaved) return;
+            
+            const name = playerNameInput.value.trim() || 'Anonymous';
+            localStorage.setItem('snakePlayerName', name);
+            addToLeaderboard(name, score, currentDifficulty);
+            scoreSaved = true;
+            
+            saveScoreBtn.disabled = true;
+            saveScoreBtn.textContent = '✅ Saved!';
+            saveScoreBtn.className = 'bg-gray-600 text-gray-300 font-bold py-3 px-6 rounded-lg text-lg cursor-not-allowed w-full';
+        }
+
+        saveScoreBtn.addEventListener('click', saveScore);
+        
+        playerNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                saveScore();
+            }
+        });
+
+        // Back to menu
+        function backToMenu() {
+            isGameRunning = false;
+            isPaused = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            gameOverScreen.classList.add('hidden');
+            gameOverScreen.style.display = 'none';
+            pauseScreen.classList.add('hidden');
+            pauseScreen.style.display = 'none';
+            startScreen.style.display = 'flex';
+            startScreen.classList.remove('hidden');
+            difficultyBadge.classList.add('hidden');
+            menuBtn.classList.add('hidden');
+            renderLeaderboard(currentLeaderboardFilter);
+            initGame();
+            render(1);
+        }
+
+        backToMenuBtn.addEventListener('click', backToMenu);
+        menuBtn.addEventListener('click', () => {
+            if (isGameRunning && !isPaused) {
+                togglePause();
+            }
+            backToMenu();
+        });
+
+        restartBtn.addEventListener('click', startGame);
+        
+        // Resume
+        resumeBtn.addEventListener('click', togglePause);
+
+        // Toggle pause
+        function togglePause() {
+            if (!isGameRunning) return;
+            isPaused = !isPaused;
+            
+            if (isPaused) {
+                pauseScreen.style.display = 'flex';
+                pauseScreen.classList.remove('hidden');
+            } else {
+                pauseScreen.classList.add('hidden');
+                pauseScreen.style.display = 'none';
+                lastUpdateTime = performance.now();
+                accumulator = 0;
+            }
+        }
+
+        // Direction change
+        let lastDirectionChange = 0;
+        function changeDirection(newDir) {
+            const now = performance.now();
+            if (now - lastDirectionChange < 50) return;
+            
+            if (newDir === 'up' && direction.y !== 1) {
+                nextDirection = { x: 0, y: -1 };
+                lastDirectionChange = now;
+            } else if (newDir === 'down' && direction.y !== -1) {
+                nextDirection = { x: 0, y: 1 };
+                lastDirectionChange = now;
+            } else if (newDir === 'left' && direction.x !== 1) {
+                nextDirection = { x: -1, y: 0 };
+                lastDirectionChange = now;
+            } else if (newDir === 'right' && direction.x !== -1) {
+                nextDirection = { x: 1, y: 0 };
+                lastDirectionChange = now;
+            }
+        }
+
+        // Keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'p' || e.key === 'P') {
+                togglePause();
+                return;
+            }
+            
+            if (e.key === 'Escape') {
+                if (isPaused || !isGameRunning) {
+                    backToMenu();
+                }
+                return;
+            }
+            
+            if (!isGameRunning || isPaused) return;
+
+            switch (e.key) {
+                case 'ArrowUp': case 'w': case 'W':
+                    changeDirection('up');
+                    e.preventDefault();
+                    break;
+                case 'ArrowDown': case 's': case 'S':
+                    changeDirection('down');
+                    e.preventDefault();
+                    break;
+                case 'ArrowLeft': case 'a': case 'A':
+                    changeDirection('left');
+                    e.preventDefault();
+                    break;
+                case 'ArrowRight': case 'd': case 'D':
+                    changeDirection('right');
+                    e.preventDefault();
+                    break;
+            }
+        });
+
+        // Mobile buttons
+        function setupMobileBtn(btn, dir) {
+            const handler = (e) => {
+                e.preventDefault();
+                if (!isGameRunning) return;
+                if (isPaused) {
+                    togglePause();
+                    return;
+                }
+                changeDirection(dir);
+            };
+            btn.addEventListener('touchstart', handler, { passive: false });
+            btn.addEventListener('mousedown', handler);
+        }
+
+        setupMobileBtn(btnUp, 'up');
+        setupMobileBtn(btnDown, 'down');
+        setupMobileBtn(btnLeft, 'left');
+        setupMobileBtn(btnRight, 'right');
+
+        // Swipe controls
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchStartTime = 0;
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (isPaused) {
+                togglePause();
+                return;
+            }
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            touchStartTime = performance.now();
+        }, { passive: false });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            if (!isGameRunning || isPaused) return;
+            
+            const touch = e.changedTouches[0];
+            const deltaX = touch.clientX - touchStartX;
+            const deltaY = touch.clientY - touchStartY;
+            const deltaTime = performance.now() - touchStartTime;
+            
+            if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10 && deltaTime < 200) {
+                return;
+            }
+            
+            const minSwipe = 30;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (deltaX > minSwipe) changeDirection('right');
+                else if (deltaX < -minSwipe) changeDirection('left');
+            } else {
+                if (deltaY > minSwipe) changeDirection('down');
+                else if (deltaY < -minSwipe) changeDirection('up');
+            }
+        }, { passive: false });
+
+        // Pause screen
+        pauseScreen.addEventListener('click', (e) => {
+            if (e.target === pauseScreen) togglePause();
+        });
+
+        // Button listeners
+        startBtn.addEventListener('click', startGame);
+        
+        startBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            startGame();
+        }, { passive: false });
+        
+        restartBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            startGame();
+        }, { passive: false });
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            const result = resizeCanvas();
+            canvasSize = result.size;
+            gridSize = result.gridSize;
+            tileCount = canvasSize / gridSize;
+            
+            if (!isGameRunning) {
+                initGame();
+            }
+            
+            // Recalculate positions
+            snakePositions = snake.map(s => ({ x: s.x * gridSize, y: s.y * gridSize }));
+            snakeTargets = snake.map(s => ({ x: s.x * gridSize, y: s.y * gridSize }));
+            render(1);
+        });
+
+        // Prevent context menu
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // Initial setup
+        initGame();
+        render(1);
+        renderLeaderboard('all');
+    </script>
+</body>
+</html>
