@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asep Bird Nest | Sarang Burung Walet Premium Indonesia</title>
+    <meta name="description" content="Asep Bird Nest - Supplier sarang burung walet premium berkualitas tinggi. Sarang walet asli Indonesia dengan proses pembersihan higienis dan standar ekspor.">
+    <meta name="keywords" content="sarang burung walet, bird nest, sarang walet premium, supplier sarang walet, sarang walet Indonesia">
+    <meta name="author" content="Asep Bird Nest">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://asepbirdnest.com/">
+    <meta property="og:title" content="Asep Bird Nest | Sarang Burung Walet Premium Indonesia">
+    <meta property="og:description" content="Supplier sarang burung walet premium berkualitas tinggi dengan standar ekspor internasional.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://asepbirdnest.com/">
+    <meta property="twitter:title" content="Asep Bird Nest | Sarang Burung Walet Premium Indonesia">
+    <meta property="twitter:description" content="Supplier sarang burung walet premium berkualitas tinggi dengan standar ekspor internasional.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --gold-primary: #E5B80B;
+            --gold-light: #F5D442;
+            --gold-dark: #C49B08;
+            --netflix-black: #141414;
+            --netflix-dark: #181818;
+            --netflix-gray: #232323;
+            --netflix-light-gray: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--netflix-black);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Gold Gradient Text */
+        .gold-text {
+            background: linear-gradient(135deg, #F5D442 0%, #E5B80B 50%, #C49B08 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Netflix Style Button */
+        .btn-gold {
+            background: linear-gradient(135deg, #E5B80B 0%, #C49B08 100%);
+            color: #000;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-gold:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(229, 184, 11, 0.4);
+        }
+
+        .btn-gold:hover::before {
+            left: 100%;
+        }
+
+        .btn-outline {
+            border: 2px solid #E5B80B;
+            color: #E5B80B;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #E5B80B;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        /* Netflix Card Style */
+        .netflix-card {
+            background: linear-gradient(145deg, #232323 0%, #181818 100%);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .netflix-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(229,184,11,0.3), transparent, rgba(229,184,11,0.1));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .netflix-card:hover {
+            transform: scale(1.08) translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(229,184,11,0.2);
+            z-index: 10;
+        }
+
+        .netflix-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-image {
+            transition: transform 0.5s ease;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: transparent;
+            transition: all 0.4s ease;
+        }
+
+        .navbar.scrolled {
+            background: linear-gradient(180deg, rgba(20,20,20,0.98) 0%, rgba(20,20,20,0.95) 100%);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-link {
+            position: relative;
+            color: #e5e5e5;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #E5B80B;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #E5B80B;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #E5B80B;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920') center/cover no-repeat;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(20,20,20,0.95) 0%, rgba(20,20,20,0.7) 50%, rgba(20,20,20,0.4) 100%);
+        }
+
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 200px 100px rgba(20,20,20,0.8);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(60px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(229, 184, 11, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(229, 184, 11, 0.8), 0 0 60px rgba(229, 184, 11, 0.4); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .animate-fade-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .animate-fade-left {
+            animation: fadeInLeft 1s ease-out forwards;
+        }
+
+        .animate-fade-right {
+            animation: fadeInRight 1s ease-out forwards;
+        }
+
+        .animate-scale {
+            animation: scaleIn 0.8s ease-out forwards;
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        /* Delay Classes */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+
+        /* Scroll Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Section Styling */
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #E5B80B;
+        }
+
+        /* Divider */
+        .gold-line {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #E5B80B, #F5D442);
+            border-radius: 2px;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* WhatsApp Button */
+        .wa-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.5);
+            transition: all 0.3s ease;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .wa-float:hover {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.7);
+        }
+
+        /* Form Styling */
+        .form-input {
+            background: rgba(35,35,35,0.8);
+            border: 1px solid rgba(229,184,11,0.2);
+            color: #fff;
+            padding: 16px 20px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #E5B80B;
+            box-shadow: 0 0 20px rgba(229,184,11,0.2);
+            background: rgba(35,35,35,1);
+        }
+
+        .form-input::placeholder {
+            color: #888;
+        }
+
+        /* Testimonial Card */
+        .testimonial-card {
+            background: linear-gradient(145deg, #1f1f1f 0%, #181818 100%);
+            border: 1px solid rgba(229,184,11,0.1);
+            border-radius: 12px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            font-size: 80px;
+            font-family: 'Playfair Display', serif;
+            color: rgba(229,184,11,0.15);
+            line-height: 1;
+        }
+
+        /* Pricing Card */
+        .pricing-card {
+            background: linear-gradient(145deg, #1f1f1f 0%, #141414 100%);
+            border: 1px solid rgba(229,184,11,0.15);
+            border-radius: 12px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #E5B80B, #F5D442);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .pricing-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(229,184,11,0.4);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .pricing-card.featured {
+            border-color: #E5B80B;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            transform: scaleX(1);
+        }
+
+        /* Stats Counter */
+        .stat-number {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: #141414;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(229,184,11,0.2);
+            border-top-color: #E5B80B;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #141414;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #E5B80B, #C49B08);
+            border-radius: 4px;
+        }
+
+        /* Image Zoom Container */
+        .img-zoom-container {
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .img-zoom-container img {
+            transition: transform 0.6s ease;
+        }
+
+        .img-zoom-container:hover img {
+            transform: scale(1.15);
+        }
+
+        /* Product Row - Netflix Style */
+        .product-row {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .product-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-row .netflix-card {
+            flex: 0 0 300px;
+            scroll-snap-align: start;
+        }
+
+        /* Gradient Borders */
+        .gradient-border {
+            position: relative;
+            background: #181818;
+            border-radius: 12px;
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            padding: 2px;
+            background: linear-gradient(135deg, #E5B80B, transparent, #E5B80B);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        /* Feature Icon */
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(229,184,11,0.2) 0%, rgba(229,184,11,0.05) 100%);
+            border: 1px solid rgba(229,184,11,0.3);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #E5B80B;
+            transition: all 0.3s ease;
+        }
+
+        .feature-icon:hover {
+            background: linear-gradient(135deg, #E5B80B 0%, #C49B08 100%);
+            color: #000;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-overlay {
+                background: linear-gradient(180deg, rgba(20,20,20,0.7) 0%, rgba(20,20,20,0.95) 100%);
+            }
+
+            .wa-float {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="text-center">
+            <div class="loader mx-auto mb-6"></div>
+            <h2 class="font-playfair text-2xl gold-text font-bold">Asep Bird Nest</h2>
+            <p class="text-gray-500 text-sm mt-2">Premium Quality Since 2009</p>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 py-4 lg:py-5">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" onclick="showPage('home')" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[#E5B80B] to-[#C49B08] flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                    <i class="fas fa-feather-alt text-black text-xl"></i>
+                </div>
+                <div class="hidden sm:block">
+                    <h1 class="font-playfair text-xl font-bold text-white leading-tight">Asep Bird Nest</h1>
+                    <p class="text-[10px] tracking-[3px] text-[#E5B80B] uppercase">Premium Quality</p>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center gap-10">
+                <a href="#" onclick="showPage('home')" class="nav-link active" data-page="home">Beranda</a>
+                <a href="#" onclick="showPage('products')" class="nav-link" data-page="products">Produk</a>
+                <a href="#" onclick="showPage('about')" class="nav-link" data-page="about">Tentang Kami</a>
+                <a href="#" onclick="showPage('contact')" class="nav-link" data-page="contact">Kontak</a>
+                <a href="https://wa.me/6281234567890" target="_blank" class="btn-gold text-sm">
+                    <i class="fab fa-whatsapp mr-2"></i>Order Now
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="lg:hidden text-white text-2xl p-2" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars" id="menuIcon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed top-0 right-0 w-full max-w-sm h-full bg-[#141414] z-50 p-8" id="mobileMenu">
+        <div class="flex justify-between items-center mb-12">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#E5B80B] to-[#C49B08] flex items-center justify-center">
+                    <i class="fas fa-feather-alt text-black"></i>
+                </div>
+                <span class="font-playfair text-lg font-bold text-white">Asep Bird Nest</span>
+            </div>
+            <button class="text-white text-2xl" onclick="toggleMobileMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-1">
+            <a href="#" onclick="showPage('home'); toggleMobileMenu();" class="text-white hover:text-[#E5B80B] transition-all py-4 text-lg border-b border-gray-800 flex items-center gap-4">
+                <i class="fas fa-home w-6 text-[#E5B80B]"></i> Beranda
+            </a>
+            <a href="#" onclick="showPage('products'); toggleMobileMenu();" class="text-white hover:text-[#E5B80B] transition-all py-4 text-lg border-b border-gray-800 flex items-center gap-4">
+                <i class="fas fa-box w-6 text-[#E5B80B]"></i> Produk
+            </a>
+            <a href="#" onclick="showPage('about'); toggleMobileMenu();" class="text-white hover:text-[#E5B80B] transition-all py-4 text-lg border-b border-gray-800 flex items-center gap-4">
+                <i class="fas fa-building w-6 text-[#E5B80B]"></i> Tentang Kami
+            </a>
+            <a href="#" onclick="showPage('contact'); toggleMobileMenu();" class="text-white hover:text-[#E5B80B] transition-all py-4 text-lg border-b border-gray-800 flex items-center gap-4">
+                <i class="fas fa-envelope w-6 text-[#E5B80B]"></i> Kontak
+            </a>
+            <a href="https://wa.me/6281234567890" target="_blank" class="btn-gold text-center mt-8 text-base">
+                <i class="fab fa-whatsapp mr-2"></i>Order via WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="fixed inset-0 bg-black/70 z-40 hidden backdrop-blur-sm" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- ==================== HOME PAGE ==================== -->
+    <section id="page-home" class="page-section active">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-vignette"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 lg:px-8 py-32">
+                <div class="max-w-2xl">
+                    <p class="section-subtitle mb-4 animate-fade-up opacity-0" style="animation-delay: 0.2s; animation-fill-mode: forwards;">Premium Bird Nest Supplier</p>
+                    <h1 class="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-6 animate-fade-up opacity-0" style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+                        Sarang Walet<br>
+                        <span class="gold-text">Kualitas Premium</span>
+                    </h1>
+                    <p class="text-gray-300 text-base sm:text-lg leading-relaxed mb-8 max-w-xl animate-fade-up opacity-0" style="animation-delay: 0.6s; animation-fill-mode: forwards;">
+                        Menyediakan sarang burung walet berkualitas tinggi dengan proses pembersihan higienis dan standar ekspor internasional.
+                    </p>
+                    <div class="flex flex-wrap gap-4 animate-fade-up opacity-0" style="animation-delay: 0.8s; animation-fill-mode: forwards;">
+                        <a href="#" onclick="showPage('products')" class="btn-gold">
+                            Lihat Produk <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="https://wa.me/6281234567890" target="_blank" class="btn-outline">
+                            <i class="fab fa-whatsapp mr-2"></i>Hubungi Kami
+                        </a>
+                    </div>
+                </div>
+                <!-- Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 pt-10 border-t border-gray-800">
+                    <div class="text-center reveal">
+                        <p class="stat-number gold-text font-playfair" data-target="15">0</p>
+                        <p class="text-gray-400 text-sm mt-2">Tahun Pengalaman</p>
+                    </div>
+                    <div class="text-center reveal" style="transition-delay: 0.1s;">
+                        <p class="stat-number gold-text font-playfair" data-target="5000">0</p>
+                        <p class="text-gray-400 text-sm mt-2">Pelanggan Puas</p>
+                    </div>
+                    <div class="text-center reveal" style="transition-delay: 0.2s;">
+                        <p class="stat-number gold-text font-playfair" data-target="100">0</p>
+                        <p class="text-gray-400 text-sm mt-2">Ton Terjual</p>
+                    </div>
+                    <div class="text-center reveal" style="transition-delay: 0.3s;">
+                        <p class="stat-number gold-text font-playfair" data-target="10">0</p>
+                        <p class="text-gray-400 text-sm mt-2">Negara Ekspor</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+                <div class="w-6 h-10 border-2 border-[#E5B80B] rounded-full flex justify-center pt-2">
+                    <div class="w-1.5 h-3 bg-[#E5B80B] rounded-full animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div class="py-20 lg:py-28 bg-gradient-to-b from-[#141414] to-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+                    <div class="reveal">
+                        <p class="section-subtitle mb-3">Koleksi Unggulan</p>
+                        <h2 class="section-title font-playfair text-white">Produk <span class="gold-text">Terbaik</span> Kami</h2>
+                    </div>
+                    <a href="#" onclick="showPage('products')" class="text-[#E5B80B] hover:text-[#F5D442] transition-colors font-medium reveal">
+                        Lihat Semua <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Product 1 -->
+                    <div class="netflix-card reveal" onclick="showPage('products')" style="cursor: pointer;">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400" alt="Sarang Mangkok Super" class="w-full h-full object-cover card-image">
+                        </div>
+                        <div class="p-5">
+                            <span class="inline-block px-3 py-1 bg-[#E5B80B] text-black text-xs font-bold rounded mb-3">BEST SELLER</span>
+                            <h3 class="font-playfair text-xl font-bold text-white mb-2">Sarang Mangkok Super</h3>
+                            <p class="text-gray-400 text-sm mb-4 line-clamp-2">Bentuk mangkok sempurna dengan warna putih bersih premium</p>
+                            <p class="text-[#E5B80B] font-bold text-lg">Rp 18.000.000<span class="text-gray-500 text-sm font-normal">/kg</span></p>
+                        </div>
+                    </div>
+                    <!-- Product 2 -->
+                    <div class="netflix-card reveal" onclick="showPage('products')" style="cursor: pointer; transition-delay: 0.1s;">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1606567595334-d39972c85dfd?w=400" alt="Sarang Premium 1A" class="w-full h-full object-cover card-image">
+                        </div>
+                        <div class="p-5">
+                            <span class="inline-block px-3 py-1 bg-gradient-to-r from-[#E5B80B] to-[#F5D442] text-black text-xs font-bold rounded mb-3">PREMIUM</span>
+                            <h3 class="font-playfair text-xl font-bold text-white mb-2">Sarang Premium 1A</h3>
+                            <p class="text-gray-400 text-sm mb-4 line-clamp-2">Grade tertinggi dengan kualitas ekspor internasional</p>
+                            <p class="text-[#E5B80B] font-bold text-lg">Rp 20.000.000<span class="text-gray-500 text-sm font-normal">/kg</span></p>
+                        </div>
+                    </div>
+                    <!-- Product 3 -->
+                    <div class="netflix-card reveal" onclick="showPage('products')" style="cursor: pointer; transition-delay: 0.2s;">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" alt="Sarang Sudut" class="w-full h-full object-cover card-image">
+                        </div>
+                        <div class="p-5">
+                            <span class="inline-block px-3 py-1 bg-gray-700 text-white text-xs font-bold rounded mb-3">POPULAR</span>
+                            <h3 class="font-playfair text-xl font-bold text-white mb-2">Sarang Sudut</h3>
+                            <p class="text-gray-400 text-sm mb-4 line-clamp-2">Bentuk sudut natural dengan bulu minimal</p>
+                            <p class="text-[#E5B80B] font-bold text-lg">Rp 15.000.000<span class="text-gray-500 text-sm font-normal">/kg</span></p>
+                        </div>
+                    </div>
+                    <!-- Product 4 -->
+                    <div class="netflix-card reveal" onclick="showPage('products')" style="cursor: pointer; transition-delay: 0.3s;">
+                        <div class="aspect-[4/3] overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=400" alt="Sarang Patahan" class="w-full h-full object-cover card-image">
+                        </div>
+                        <div class="p-5">
+                            <span class="inline-block px-3 py-1 bg-green-600 text-white text-xs font-bold rounded mb-3">VALUE</span>
+                            <h3 class="font-playfair text-xl font-bold text-white mb-2">Sarang Patahan</h3>
+                            <p class="text-gray-400 text-sm mb-4 line-clamp-2">Potongan berkualitas dengan harga ekonomis</p>
+                            <p class="text-[#E5B80B] font-bold text-lg">Rp 10.000.000<span class="text-gray-500 text-sm font-normal">/kg</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Why Choose Us -->
+        <div class="py-20 lg:py-28 bg-[#0a0a0a] relative overflow-hidden">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 opacity-5">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-[#E5B80B] rounded-full blur-[150px]"></div>
+                <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#E5B80B] rounded-full blur-[150px]"></div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="reveal-left">
+                        <p class="section-subtitle mb-3">Mengapa Memilih Kami</p>
+                        <h2 class="section-title font-playfair text-white mb-6">Keunggulan <span class="gold-text">Asep Bird Nest</span></h2>
+                        <p class="text-gray-400 mb-10 leading-relaxed">
+                            Kami berkomitmen menyediakan sarang burung walet dengan kualitas terbaik, proses pembersihan yang higienis, dan pelayanan profesional untuk setiap pelanggan.
+                        </p>
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div class="flex gap-4 group">
+                                <div class="feature-icon shrink-0">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white text-lg mb-1">100% Asli</h4>
+                                    <p class="text-gray-500 text-sm">Sarang walet murni tanpa campuran</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 group">
+                                <div class="feature-icon shrink-0">
+                                    <i class="fas fa-globe-asia"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white text-lg mb-1">Standar Ekspor</h4>
+                                    <p class="text-gray-500 text-sm">Kualitas internasional terjamin</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 group">
+                                <div class="feature-icon shrink-0">
+                                    <i class="fas fa-hand-sparkles"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white text-lg mb-1">Proses Higienis</h4>
+                                    <p class="text-gray-500 text-sm">Pembersihan standar tinggi</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 group">
+                                <div class="feature-icon shrink-0">
+                                    <i class="fas fa-shipping-fast"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white text-lg mb-1">Pengiriman Aman</h4>
+                                    <p class="text-gray-500 text-sm">Packaging premium terlindungi</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reveal-right">
+                        <div class="relative">
+                            <div class="img-zoom-container rounded-2xl overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600" alt="Premium Bird Nest" class="w-full">
+                            </div>
+                            <div class="absolute -bottom-6 -left-6 w-48 h-48 border-2 border-[#E5B80B] rounded-2xl -z-10"></div>
+                            <div class="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-[#E5B80B]/20 to-transparent rounded-2xl -z-10"></div>
+                            <!-- Floating Badge -->
+                            <div class="absolute -right-4 top-1/2 -translate-y-1/2 bg-gradient-to-br from-[#E5B80B] to-[#C49B08] text-black p-5 rounded-xl shadow-2xl animate-float">
+                                <p class="text-3xl font-bold font-playfair">15+</p>
+                                <p class="text-xs font-semibold">Tahun<br>Pengalaman</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="py-20 lg:py-28 bg-[#141414]">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
+                <div class="text-center mb-14 reveal">
+                    <p class="section-subtitle mb-3">Testimoni Pelanggan</p>
+                    <h2 class="section-title font-playfair text-white">Apa Kata <span class="gold-text">Mereka</span></h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="testimonial-card reveal" style="transition-delay: 0.1s;">
+                        <div class="flex gap-1 mb-4 relative z-10">
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                        </div>
+                        <p class="text-gray-300 mb-6 relative z-10 leading-relaxed">
+                            "Kualitas sarang walet dari Asep Bird Nest luar biasa! Sudah 3 tahun berlangganan dan tidak pernah mengecewakan."
+                        </p>
+                        <div class="flex items-center gap-4 relative z-10">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#E5B80B] to-[#C49B08] flex items-center justify-center text-black font-bold text-lg">L</div>
+                            <div>
+                                <h4 class="font-semibold text-white">Linda Kusuma</h4>
+                                <p class="text-gray-500 text-sm">Pengusaha, Jakarta</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card reveal" style="transition-delay: 0.2s;">
+                        <div class="flex gap-1 mb-4 relative z-10">
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                        </div>
+                        <p class="text-gray-300 mb-6 relative z-10 leading-relaxed">
+                            "Sebagai pemilik restoran, saya sangat selektif memilih supplier. Asep Bird Nest adalah yang terbaik!"
+                        </p>
+                        <div class="flex items-center gap-4 relative z-10">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#E5B80B] to-[#C49B08] flex items-center justify-center text-black font-bold text-lg">W</div>
+                            <div>
+                                <h4 class="font-semibold text-white">William Tan</h4>
+                                <p class="text-gray-500 text-sm">Pemilik Restoran, Surabaya</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card reveal" style="transition-delay: 0.3s;">
+                        <div class="flex gap-1 mb-4 relative z-10">
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                            <i class="fas fa-star text-[#E5B80B]"></i>
+                        </div>
+                        <p class="text-gray-300 mb-6 relative z-10 leading-relaxed">
+                            "Harga kompetitif dengan kualitas ekspor. Tim sangat profesional dan responsif. Sangat recommended!"
+                        </p>
+                        <div class="flex items-center gap-4 relative z-10">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#E5B80B] to-[#C49B08] flex items-center justify-center text-black font-bold text-lg">S</div>
+                            <div>
+                                <h4 class="font-semibold text-white">Siti Rahayu</h4>
+                                <p class="text-gray-500 text-sm">Eksportir, Medan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="py-20 lg:py-28 bg-gradient-to-b from-[#141414] to-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
+                <div class="text-center mb-14 reveal">
+                    <p class="section-subtitle mb-3">Paket Produk</p>
+                    <h2 class="section-title font-playfair text-white">Pilih <span class="gold-text">Paket Terbaik</span></h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Standard -->
+                    <div class="pricing-card p-8 reveal" style="transition-delay: 0.1s;">
+                        <div class="text-center mb-8">
+                            <p class="text-[#E5B80B] font-semibold mb-2">Paket Standard</p>
+                            <p class="font-playfair text-4xl font-bold text-white">Rp 10<span class="text-lg font-normal text-gray-500">Juta/kg</span></p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Sarang Patahan Premium
+                            </li>
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Bersih tanpa bulu
+                            </li>
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Packaging standar
+                            </li>
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Sertifikat keaslian
+                            </li>
+                        </ul>
+                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan Paket Standard" target="_blank" class="btn-outline w-full block text-center">
+                            Order Sekarang
+                        </a>
+                    </div>
+                    <!-- Premium - Featured -->
+                    <div class="pricing-card featured p-8 reveal relative" style="transition-delay: 0.2s;">
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#E5B80B] to-[#F5D442] text-black text-xs font-bold px-4 py-2 rounded-full"> BEST SELLER </div>
+                        <div class="text-center mb-8">
+                            <p class="text-[#E5B80B] font-semibold mb-2">Paket Premium</p>
+                            <p class="font-playfair text-4xl font-bold text-white">Rp 18<span class="text-lg font-normal text-gray-500">Juta/kg</span></p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Sarang Mangkok Super
+                            </li>
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Bentuk utuh sempurna
+                            </li>
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Premium box packaging
+                            </li>
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Sertifikat + Free konsultasi
+                            </li>
+                        </ul>
+                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan Paket Premium" target="_blank" class="btn-gold w-full block text-center">
+                            Order Sekarang
+                        </a>
+                    </div>
+                    <!-- Exclusive -->
+                    <div class="pricing-card p-8 reveal" style="transition-delay: 0.3s;">
+                        <div class="text-center mb-8">
+                            <p class="text-[#E5B80B] font-semibold mb-2">Paket Exclusive</p>
+                            <p class="font-playfair text-4xl font-bold text-white">Rp 20<span class="text-lg font-normal text-gray-500">Juta/kg</span></p>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Sarang Premium Grade 1A
+                            </li>
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Kualitas ekspor
+                            </li>
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Luxury gift box
+                            </li>
+                            <li class="flex items-center gap-3 text-gray-300">
+                                <i class="fas fa-check text-[#E5B80B]"></i> Priority support
+                            </li>
+                        </ul>
+                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan Paket Exclusive" target="_blank" class="btn-outline w-full block text-center">
+                            Order Sekarang
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="py-20 bg-gradient-to-r from-[#E5B80B] to-[#C49B08] relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920" alt="" class="w-full h-full object-cover">
+            </div>
+            <div class="max-w-4xl mx-auto px-4 lg:px-8 text-center relative z-10 reveal">
+                <h2 class="font-playfair text-3xl md:text-5xl font-bold text-black mb-6">Siap Memesan Sarang Walet Premium?</h2>
+                <p class="text-black/80 text-lg mb-8 max-w-2xl mx-auto">
+                    Hubungi kami sekarang untuk penawaran terbaik dan konsultasi gratis!
+                </p>
+                <a href="https://wa.me/6281234567890" target="_blank" class="inline-block bg-black text-white font-bold px-10 py-4 rounded hover:bg-gray-900 transition-all hover:scale-105 uppercase tracking-wider">
+                    <i class="fab fa-whatsapp mr-2"></i>Chat via WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PRODUCTS PAGE ==================== -->
+    <section id="page-products" class="page-section">
+        <!-- Products Hero -->
+        <div class="pt-32 pb-16 bg-gradient-to-b from-[#141414] to-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
+                <p class="section-subtitle mb-3 animate-fade-up opacity-0" style="animation-delay: 0.2s; animation-fill-mode: forwards;">Koleksi Kami</p>
+                <h1 class="font-playfair text-4xl md:text-6xl font-black text-white mb-4 animate-fade-up opacity-0" style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+                    Produk <span class="gold-text">Sarang Walet</span>
+                </h1>
+                <p class="text-gray-400 max-w-2xl animate-fade-up opacity-0" style="animation-delay: 0.6s; animation-fill-mode: forwards;">
+                    Berbagai pilihan sarang burung walet berkualitas premium dengan harga bersaing.
+                </p>
+            </div>
+        </div>
+
+        <!-- Products List -->
+        <div class="py-16 bg-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
+                <!-- Product 1 -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center mb-24 reveal">
+                    <div class="order-2 lg:order-1">
+                        <span class="inline-block px-4 py-2 bg-[#E5B80B] text-black text-sm font-bold rounded mb-4">BEST SELLER</span>
+                        <h2 class="font-playfair text-3xl md:text-4xl font-bold text-white mb-4">Sarang Mangkok Super</h2>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            Sarang burung walet dengan bentuk mangkok sempurna yang utuh dan tidak pecah. Memiliki warna putih bersih dengan tekstur halus dan serat yang rapat.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Bentuk utuh sempurna</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Warna putih bersih</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Bersih 95-98%</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>6-10 gram/keping</span>
+                            </div>
+                        </div>
+                        <p class="font-playfair text-3xl font-bold gold-text mb-6">Rp 18.000.000<span class="text-gray-500 text-lg font-normal">/kg</span></p>
+                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan Sarang Mangkok Super" target="_blank" class="btn-gold inline-block">
+                            <i class="fab fa-whatsapp mr-2"></i>Order via WhatsApp
+                        </a>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="relative">
+                            <div class="img-zoom-container rounded-xl overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600" alt="Sarang Mangkok Super" class="w-full">
+                            </div>
+                            <div class="absolute -bottom-4 -right-4 w-full h-full border-2 border-[#E5B80B] rounded-xl -z-10"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center mb-24 reveal">
+                    <div>
+                        <div class="relative">
+                            <div class="img-zoom-container rounded-xl overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1606567595334-d39972c85dfd?w=600" alt="Sarang Premium 1A" class="w-full">
+                            </div>
+                            <div class="absolute -bottom-4 -left-4 w-full h-full border-2 border-[#E5B80B] rounded-xl -z-10"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="inline-block px-4 py-2 bg-gradient-to-r from-[#E5B80B] to-[#F5D442] text-black text-sm font-bold rounded mb-4">PREMIUM GRADE</span>
+                        <h2 class="font-playfair text-3xl md:text-4xl font-bold text-white mb-4">Sarang Premium 1A</h2>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            Grade tertinggi dari koleksi sarang burung walet kami. Dipilih secara selektif dengan standar kualitas ekspor internasional.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Grade A1 ekspor</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Warna keemasan</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Bersih 98-100%</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Sertifikat ekspor</span>
+                            </div>
+                        </div>
+                        <p class="font-playfair text-3xl font-bold gold-text mb-6">Rp 20.000.000<span class="text-gray-500 text-lg font-normal">/kg</span></p>
+                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan Sarang Premium 1A" target="_blank" class="btn-gold inline-block">
+                            <i class="fab fa-whatsapp mr-2"></i>Order via WhatsApp
+                        </a>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center mb-24 reveal">
+                    <div class="order-2 lg:order-1">
+                        <span class="inline-block px-4 py-2 bg-gray-700 text-white text-sm font-bold rounded mb-4">POPULAR</span>
+                        <h2 class="font-playfair text-3xl md:text-4xl font-bold text-white mb-4">Sarang Sudut</h2>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            Sarang walet yang diambil dari sudut bangunan dengan bentuk khas segitiga atau setengah mangkok. Kualitas sama baiknya dengan harga lebih terjangkau.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Bentuk sudut natural</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Warna putih bersih</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Bersih 95%</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Harga ekonomis</span>
+                            </div>
+                        </div>
+                        <p class="font-playfair text-3xl font-bold gold-text mb-6">Rp 15.000.000<span class="text-gray-500 text-lg font-normal">/kg</span></p>
+                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan Sarang Sudut" target="_blank" class="btn-gold inline-block">
+                            <i class="fab fa-whatsapp mr-2"></i>Order via WhatsApp
+                        </a>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="relative">
+                            <div class="img-zoom-container rounded-xl overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600" alt="Sarang Sudut" class="w-full">
+                            </div>
+                            <div class="absolute -bottom-4 -right-4 w-full h-full border-2 border-[#E5B80B] rounded-xl -z-10"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 4 -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center reveal">
+                    <div>
+                        <div class="relative">
+                            <div class="img-zoom-container rounded-xl overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600" alt="Sarang Patahan" class="w-full">
+                            </div>
+                            <div class="absolute -bottom-4 -left-4 w-full h-full border-2 border-[#E5B80B] rounded-xl -z-10"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="inline-block px-4 py-2 bg-green-600 text-white text-sm font-bold rounded mb-4">VALUE FOR MONEY</span>
+                        <h2 class="font-playfair text-3xl md:text-4xl font-bold text-white mb-4">Sarang Patahan</h2>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            Potongan sarang walet berkualitas tinggi. Meskipun bentuknya tidak utuh, kandungan nutrisinya tetap sama. Pilihan ekonomis untuk konsumsi harian.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Potongan berkualitas</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Nutrisi sama</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Bersih 90-95%</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-gray-300">
+                                <i class="fas fa-check-circle text-[#E5B80B]"></i>
+                                <span>Harga terjangkau</span>
+                            </div>
+                        </div>
+                        <p class="font-playfair text-3xl font-bold gold-text mb-6">Rp 10.000.000<span class="text-gray-500 text-lg font-normal">/kg</span></p>
+                        <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan Sarang Patahan" target="_blank" class="btn-gold inline-block">
+                            <i class="fab fa-whatsapp mr-2"></i>Order via WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT PAGE ==================== -->
+    <section id="page-about" class="page-section">
+        <!-- About Hero -->
+        <div class="pt-32 pb-16 bg-gradient-to-b from-[#141414] to-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
+                <p class="section-subtitle mb-3 animate-fade-up opacity-0" style="animation-delay: 0.2s; animation-fill-mode: forwards;">Tentang Kami</p>
+                <h1 class="font-playfair text-4xl md:text-6xl font-black text-white mb-4 animate-fade-up opacity-0" style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+                    Asep <span class="gold-text">Bird Nest</span>
+                </h1>
+                <p class="text-gray-400 max-w-2xl animate-fade-up opacity-0" style="animation-delay: 0.6s; animation-fill-mode: forwards;">
+                    Supplier sarang burung walet premium terpercaya dengan pengalaman lebih dari 15 tahun.
+                </p>
+            </div>
+        </div>
+
+        <!-- Company Profile -->
+        <div class="py-16 bg-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-16 items-center mb-24 reveal">
+                    <div>
+                        <p class="section-subtitle mb-3">Profil Perusahaan</p>
+                        <h2 class="font-playfair text-3xl md:text-4xl font-bold text-white mb-6">Perjalanan <span class="gold-text">Kami</span></h2>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            <strong class="text-white">Asep Bird Nest</strong> didirikan pada tahun 2009 oleh Bapak Asep Suryadi dengan visi menjadi supplier sarang burung walet terpercaya di Indonesia.
+                        </p>
+                        <p class="text-gray-400 mb-8 leading-relaxed">
+                            Dengan pengalaman lebih dari 15 tahun, kami memahami pentingnya kualitas dan kepercayaan. Setiap sarang telah melalui proses seleksi ketat dan pembersihan higienis.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center p-6 bg-[#181818] border border-gray-800 rounded-xl">
+                                <p class="font-playfair text-3xl font-bold gold-text">15+</p>
+                                <p class="text-gray-500 text-sm mt-1">Tahun Pengalaman</p>
+                            </div>
+                            <div class="text-center p-6 bg-[#181818] border border-gray-800 rounded-xl">
+                                <p class="font-playfair text-3xl font-bold gold-text">5000+</p>
+                                <p class="text-gray-500 text-sm mt-1">Pelanggan Puas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="img-zoom-container rounded-xl overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600" alt="Office" class="w-full">
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 w-full h-full border-2 border-[#E5B80B] rounded-xl -z-10"></div>
+                    </div>
+                </div>
+
+                <!-- Vision Mission -->
+                <div class="grid md:grid-cols-2 gap-8 mb-24">
+                    <div class="netflix-card p-8 reveal">
+                        <div class="feature-icon mb-6">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 class="font-playfair text-2xl font-bold text-white mb-4">Visi Kami</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Menjadi supplier sarang burung walet terdepan di Indonesia yang dikenal karena kualitas produk premium dan pelayanan terbaik.
+                        </p>
+                    </div>
+                    <div class="netflix-card p-8 reveal" style="transition-delay: 0.1s;">
+                        <div class="feature-icon mb-6">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3 class="font-playfair text-2xl font-bold text-white mb-4">Misi Kami</h3>
+                        <ul class="text-gray-400 space-y-3">
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-[#E5B80B] mt-1"></i>
+                                <span>Menyediakan sarang walet berkualitas premium</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-[#E5B80B] mt-1"></i>
+                                <span>Menerapkan standar kebersihan internasional</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-check text-[#E5B80B] mt-1"></i>
+                                <span>Memberikan pelayanan profesional</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Legality -->
+                <div class="mb-24 reveal">
+                    <div class="text-center mb-12">
+                        <p class="section-subtitle mb-3">Legalitas Usaha</p>
+                        <h2 class="font-playfair text-3xl md:text-4xl font-bold text-white">Terpercaya & <span class="gold-text">Bersertifikat</span></h2>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div class="netflix-card p-6 text-center">
+                            <div class="feature-icon mx-auto mb-4">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <h4 class="font-semibold text-white mb-1">SIUP</h4>
+                            <p class="text-gray-500 text-sm">Izin Usaha Perdagangan</p>
+                        </div>
+                        <div class="netflix-card p-6 text-center" style="transition-delay: 0.1s;">
+                            <div class="feature-icon mx-auto mb-4">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <h4 class="font-semibold text-white mb-1">TDP</h4>
+                            <p class="text-gray-500 text-sm">Tanda Daftar Perusahaan</p>
+                        </div>
+                        <div class="netflix-card p-6 text-center" style="transition-delay: 0.2s;">
+                            <div class="feature-icon mx-auto mb-4">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <h4 class="font-semibold text-white mb-1">NPWP</h4>
+                            <p class="text-gray-500 text-sm">Nomor Pokok Wajib Pajak</p>
+                        </div>
+                        <div class="netflix-card p-6 text-center" style="transition-delay: 0.3s;">
+                            <div class="feature-icon mx-auto mb-4">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <h4 class="font-semibold text-white mb-1">Halal</h4>
+                            <p class="text-gray-500 text-sm">Sertifikat Halal MUI</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery -->
+                <div class="reveal">
+                    <div class="text-center mb-12">
+                        <p class="section-subtitle mb-3">Galeri</p>
+                        <h2 class="font-playfair text-3xl md:text-4xl font-bold text-white">Fasilitas & <span class="gold-text">Proses</span></h2>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="img-zoom-container rounded-xl relative group">
+                            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400" alt="Warehouse" class="w-full h-64 object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex items-end p-6">
+                                <div>
+                                    <h4 class="text-white font-semibold text-lg">Gudang Penyimpanan</h4>
+                                    <p class="text-gray-400 text-sm">Kontrol suhu terjaga</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="img-zoom-container rounded-xl relative group" style="transition-delay: 0.1s;">
+                            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400" alt="Cleaning" class="w-full h-64 object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex items-end p-6">
+                                <div>
+                                    <h4 class="text-white font-semibold text-lg">Proses Pembersihan</h4>
+                                    <p class="text-gray-400 text-sm">Manual & higienis</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="img-zoom-container rounded-xl relative group" style="transition-delay: 0.2s;">
+                            <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400" alt="Packaging" class="w-full h-64 object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex items-end p-6">
+                                <div>
+                                    <h4 class="text-white font-semibold text-lg">Pengemasan Premium</h4>
+                                    <p class="text-gray-400 text-sm">Packaging eksklusif</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT PAGE ==================== -->
+    <section id="page-contact" class="page-section">
+        <!-- Contact Hero -->
+        <div class="pt-32 pb-16 bg-gradient-to-b from-[#141414] to-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
+                <p class="section-subtitle mb-3 animate-fade-up opacity-0" style="animation-delay: 0.2s; animation-fill-mode: forwards;">Hubungi Kami</p>
+                <h1 class="font-playfair text-4xl md:text-6xl font-black text-white mb-4 animate-fade-up opacity-0" style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+                    <span class="gold-text">Kontak</span>
+                </h1>
+                <p class="text-gray-400 max-w-2xl animate-fade-up opacity-0" style="animation-delay: 0.6s; animation-fill-mode: forwards;">
+                    Kami siap melayani pertanyaan dan pesanan Anda.
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact Content -->
+        <div class="py-16 bg-[#0a0a0a]">
+            <div class="max-w-7xl mx-auto px-4 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-16">
+                    <!-- Form -->
+                    <div class="reveal">
+                        <h2 class="font-playfair text-2xl font-bold text-white mb-6">Kirim Pesan</h2>
+                        <form id="contactForm" class="space-y-5">
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm">Nama Lengkap</label>
+                                <input type="text" name="name" required class="form-input" placeholder="Masukkan nama Anda">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm">Email</label>
+                                <input type="email" name="email" required class="form-input" placeholder="Masukkan email Anda">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm">No. WhatsApp</label>
+                                <input type="tel" name="phone" class="form-input" placeholder="Contoh: 081234567890">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm">Pesan</label>
+                                <textarea name="message" rows="4" required class="form-input resize-none" placeholder="Tulis pesan Anda..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-gold w-full">
+                                <i class="fas fa-paper-plane mr-2"></i>Kirim Pesan
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="reveal" style="transition-delay: 0.1s;">
+                        <h2 class="font-playfair text-2xl font-bold text-white mb-6">Informasi Kontak</h2>
+                        <div class="space-y-6 mb-10">
+                            <div class="flex gap-5">
+                                <div class="feature-icon shrink-0" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Alamat</h4>
+                                    <p class="text-gray-400">Jl. Raya Bandung No. 123<br>Kec. Cimahi Selatan, Kota Cimahi<br>Jawa Barat, Indonesia 40534</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-5">
+                                <div class="feature-icon shrink-0" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Telepon</h4>
+                                    <p class="text-gray-400">+62 812-3456-7890<br>+62 22-1234-5678</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-5">
+                                <div class="feature-icon shrink-0" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Email</h4>
+                                    <p class="text-gray-400">info@asepbirdnest.com<br>order@asepbirdnest.com</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-5">
+                                <div class="feature-icon shrink-0" style="width: 60px; height: 60px;">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Jam Operasional</h4>
+                                    <p class="text-gray-400">Senin - Sabtu: 08:00 - 17:00 WIB<br>Minggu: Tutup</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Social -->
+                        <div>
+                            <h4 class="font-semibold text-white mb-4">Ikuti Kami</h4>
+                            <div class="flex gap-4">
+                                <a href="#" class="w-12 h-12 rounded-lg bg-[#181818] border border-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#E5B80B] hover:text-black hover:border-[#E5B80B] transition-all">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 rounded-lg bg-[#181818] border border-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#E5B80B] hover:text-black hover:border-[#E5B80B] transition-all">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 rounded-lg bg-[#181818] border border-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#E5B80B] hover:text-black hover:border-[#E5B80B] transition-all">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 rounded-lg bg-[#181818] border border-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#E5B80B] hover:text-black hover:border-[#E5B80B] transition-all">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Map -->
+                <div class="mt-16 reveal">
+                    <h2 class="font-playfair text-2xl font-bold text-white mb-6 text-center">Lokasi Kami</h2>
+                    <div class="rounded-xl overflow-hidden border border-gray-800">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56392896014!2d107.51987565!3d-6.8841789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6398252477f%3A0x146a1f93d3e815b2!2sCimahi%2C%20West%20Java%2C%20Indonesia!5e0!3m2!1sen!2sus!4v1635000000000!5m2!1sen!2sus" width="100%" height="400" style="border:0; filter: grayscale(100%) invert(92%) contrast(83%);" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-[#0a0a0a] border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+                <!-- Company -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#E5B80B] to-[#C49B08] flex items-center justify-center">
+                            <i class="fas fa-feather-alt text-black"></i>
+                        </div>
+                        <span class="font-playfair text-lg font-bold text-white">Asep Bird Nest</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+                        Supplier sarang burung walet premium terpercaya sejak 2009.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-9 h-9 rounded bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#E5B80B] hover:text-black transition-all">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#E5B80B] hover:text-black transition-all">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#E5B80B] hover:text-black transition-all">
+                            <i class="fab fa-tiktok text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Menu</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="showPage('home')" class="text-gray-500 hover:text-[#E5B80B] transition-colors text-sm">Beranda</a></li>
+                        <li><a href="#" onclick="showPage('products')" class="text-gray-500 hover:text-[#E5B80B] transition-colors text-sm">Produk</a></li>
+                        <li><a href="#" onclick="showPage('about')" class="text-gray-500 hover:text-[#E5B80B] transition-colors text-sm">Tentang Kami</a></li>
+                        <li><a href="#" onclick="showPage('contact')" class="text-gray-500 hover:text-[#E5B80B] transition-colors text-sm">Kontak</a></li>
+                    </ul>
+                </div>
+                <!-- Products -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Produk</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="showPage('products')" class="text-gray-500 hover:text-[#E5B80B] transition-colors text-sm">Sarang Mangkok</a></li>
+                        <li><a href="#" onclick="showPage('products')" class="text-gray-500 hover:text-[#E5B80B] transition-colors text-sm">Sarang Premium 1A</a></li>
+                        <li><a href="#" onclick="showPage('products')" class="text-gray-500 hover:text-[#E5B80B] transition-colors text-sm">Sarang Sudut</a></li>
+                        <li><a href="#" onclick="showPage('products')" class="text-gray-500 hover:text-[#E5B80B] transition-colors text-sm">Sarang Patahan</a></li>
+                    </ul>
+                </div>
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Kontak</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start gap-2 text-gray-500">
+                            <i class="fas fa-map-marker-alt text-[#E5B80B] mt-1"></i>
+                            <span>Cimahi, Jawa Barat</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-500">
+                            <i class="fas fa-phone-alt text-[#E5B80B]"></i>
+                            <span>+62 812-3456-7890</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-gray-500">
+                            <i class="fas fa-envelope text-[#E5B80B]"></i>
+                            <span>info@asepbirdnest.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Copyright -->
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-600 text-sm">&copy; 2024 Asep Bird Nest. All rights reserved.</p>
+                <p class="text-gray-600 text-sm">Made with <i class="fas fa-heart text-[#E5B80B]"></i> in Indonesia</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/6281234567890?text=Halo, saya tertarik dengan produk sarang walet Asep Bird Nest" target="_blank" class="wa-float">
+        <i class="fab fa-whatsapp text-white text-3xl"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                startCounters();
+            }, 1500);
+        });
+
+        // Page Navigation
+        function showPage(pageName) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + pageName).classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageName) link.classList.add('active');
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(revealElements, 200);
+        }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileOverlay');
+            const icon = document.getElementById('menuIcon');
+            menu.classList.toggle('open');
+            overlay.classList.toggle('hidden');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+        }
+
+        // Navbar Scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Reveal on Scroll
+        function revealElements() {
+            const elements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+            elements.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (top < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealElements);
+        window.addEventListener('load', revealElements);
+
+        // Counter Animation
+        function startCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target + '+';
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }, 16);
+            });
+        }
+
+        // Contact Form
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = new FormData(this);
+            const msg = `Halo Asep Bird Nest!%0A%0ANama: ${data.get('name')}%0AEmail: ${data.get('email')}%0AWhatsApp: ${data.get('phone')}%0A%0APesan:%0A${data.get('message')}`;
+            window.open(`https://wa.me/6281234567890?text=${msg}`, '_blank');
+            this.reset();
+        });
+    </script>
+
+</body>
+</html>
